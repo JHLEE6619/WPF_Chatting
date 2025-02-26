@@ -9,11 +9,12 @@ using Chatting_Server.Model;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 
 
 namespace Chatting_Server
 {
-    class Server
+    public class Server
     {
         static Dictionary<string, NetworkStream> connectedUser = []; // <userId, socket>
         static Dictionary<byte, List<string>> chat_room_list = []; // <roomId , memberId>
@@ -21,11 +22,10 @@ namespace Chatting_Server
         static byte roomId = 0;
 
         private readonly object thisLock = new();
-        byte[] buf = new byte[1024];
 
         private enum MsgId : byte
         {
-            JOIN, LOGIN, SHOW_CHAT_ROOM, CREATE_ROOM, SEND_CHAT, SEND_FILE, INVITE, EXIT, LOGOUT
+            JOIN, LOGIN, CREATE_ROOM, SEND_CHAT, SEND_FILE, INVITE, EXIT, LOGOUT
         }
 
         public async Task StartServer()
@@ -37,16 +37,18 @@ namespace Chatting_Server
                 TcpClient client =
                     await listener.AcceptTcpClientAsync().ConfigureAwait(false);
 
-                Task.Factory.StartNew(ServerMain, client);
+                Task.Run(()=>ServerMain(client));
             }
         }
 
         // 클라이언트 별로 다른 스레드가 실행하는 메소드
-        private async void ServerMain(Object client)
+        private async Task ServerMain(Object client)
         {
+            byte[] buf = new byte[5000];
             TcpClient tc = (TcpClient)client;
             NetworkStream stream = tc.GetStream();
             Receive_Message msg = new();
+
             try
             {
                 while (true)
@@ -73,18 +75,26 @@ namespace Chatting_Server
             {
                 case (byte)MsgId.LOGIN:
                     Add_user(msg.UserId, stream);
-                    Send_userList(stream);
+                    Send_userList();
                     break;
-                case (byte)MsgId.SHOW_CHAT_ROOM: break;
                 case (byte)MsgId.CREATE_ROOM:
                     Create_chatRoom(msg.MemberId);
                     Create_chatRoomList_per_user();
                     break;
-                case (byte)MsgId.SEND_CHAT: break;
+                case (byte)MsgId.SEND_CHAT:
+                    Add_chat(msg);
+                    Search_memberId(msg.RoomId);
+                    break;
                 case (byte)MsgId.SEND_FILE: break;
-                case (byte)MsgId.INVITE: break;
-                case (byte)MsgId.EXIT: break;
-                case (byte)MsgId.LOGOUT: break;
+                case (byte)MsgId.INVITE: 
+                    Invite_member_to_chatRoom(msg.RoomId, msg.MemberId);
+                    break;
+                case (byte)MsgId.EXIT:
+                    Exit_chatRoom(msg.RoomId, msg.UserId);
+                    break;
+                case (byte)MsgId.LOGOUT:
+                    LogOut(msg.UserId);
+                    break;
             }
         }
 
@@ -96,7 +106,7 @@ namespace Chatting_Server
             }
         }
 
-        private void Send_userList(NetworkStream stream)
+        private void Send_userList()
         {
             Send_Message msg = new() { MsgId = (byte)MsgId.LOGIN };
             lock (thisLock)
@@ -108,21 +118,15 @@ namespace Chatting_Server
             }
             string json = JsonConvert.SerializeObject(msg);
             byte[] bytes = Encoding.UTF8.GetBytes(json);
-            stream.Write(bytes, 0, bytes.Length);
+            lock (thisLock)
+            {
+                // 연결된 모든 소켓으로 접속유저 리스트 전송
+                foreach (var user in connectedUser)
+                {
+                    user.Value.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false); ; // await?
+                }
+            }
         }
-
-        //private void Send_userList(NetworkStream stream)
-        //{
-        //    string userIdList = "";
-        //    // 접속중인 유저 아이디들을 구분자를 콤마로 하여 string에 모두 담는다.
-        //    foreach (var userId in connectedUser)
-        //    {
-        //        userIdList = $"{userId.Key},";
-        //    }
-        //    userIdList = userIdList.TrimEnd(','); // 마지막 구분자 콤마 제거
-        //    buf = Encoding.UTF8.GetBytes(userIdList);
-        //    stream.Write(buf, 0, buf.Length);
-        //}
 
         private void Create_chatRoom(List<string> memberId)
         {
@@ -135,9 +139,6 @@ namespace Chatting_Server
 
         private void Create_chatRoomList_per_user()
         {
-            // static Dictionary<roomId, List<memberId>> chat_room_list = [];
-            // static Dictionary<userId, stream> connectedUser = [];
-            //접속 유저 리스트와 대화방 구성원리스트 교차조회하여 send
             lock (thisLock)
             {
                 foreach (var user in connectedUser) // 유저당 대화방리스트를 만듦
@@ -166,7 +167,7 @@ namespace Chatting_Server
         {
             string json = JsonConvert.SerializeObject(msg);
             byte[] buf = Encoding.UTF8.GetBytes(json);
-            stream.Write(buf, 0, buf.Length);
+            stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
         }
 
         private void Add_chat(Receive_Message msg)
@@ -220,7 +221,30 @@ namespace Chatting_Server
             msg.ChatRecord = chat;
             string json = JsonConvert.SerializeObject(msg);
             byte[] buf = Encoding.UTF8.GetBytes(json);
-            stream.Write(buf, 0, buf.Length);
+            stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
         }
+
+        private void Invite_member_to_chatRoom(byte room_id, List<string> memberId)
+        {
+            foreach(string userId in memberId)
+            {
+                chat_room_list[room_id].Add(userId);
+            }
+            Create_chatRoomList_per_user();
+        }
+
+        private void Exit_chatRoom(byte room_id, string userId)
+        {
+            chat_room_list[room_id].Remove(userId);
+            Create_chatRoomList_per_user();
+        }
+
+        private void LogOut(string userId)
+        {
+
+            connectedUser.Remove(userId);
+            Send_userList();
+        }
+
     }
 }

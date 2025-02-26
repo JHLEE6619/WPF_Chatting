@@ -24,6 +24,14 @@ namespace Chatting
         {
             InitializeComponent();
         }
+        public Main(string userId)
+        {
+            InitializeComponent();
+            Client clnt = new();
+            clnt.ConnectServer();
+            clnt.Login(userId);
+            LV_user_list.ItemsSource = Client.UI.ConnectedUser;
+        }
 
         private void btn_chat_room_list_Click(object sender, RoutedEventArgs e)
         {

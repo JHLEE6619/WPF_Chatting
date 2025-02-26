@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Chatting.Model
 {
-    class Receive_Message
+    public class Receive_Message
     {
         public byte MsgId { get; set; }
         // 접속중인 유저 목록(id)
