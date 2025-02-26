@@ -1,0 +1,21 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.16">
+  <diagram name="페이지-1" id="WD2OT2dgkcuHMD83I0H0">
+    <mxGraphModel dx="1290" dy="562" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="AahRmUFbqmoOFG2V4ORb-2" value="user1&lt;div&gt;user2&lt;/div&gt;&lt;div&gt;user3&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="240" width="90" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="AahRmUFbqmoOFG2V4ORb-3" value="user1,user2&lt;div&gt;user2,user3&lt;/div&gt;&lt;div&gt;user3,user1&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="240" width="90" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="AahRmUFbqmoOFG2V4ORb-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.978;entryY=0.347;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="AahRmUFbqmoOFG2V4ORb-3" target="AahRmUFbqmoOFG2V4ORb-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

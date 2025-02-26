@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chatting_Server.Model
+namespace Chatting.Model
 {
-    class Message
+    class Send_Message
     {
         public byte MsgId { get; set; }
         public byte RoomId { get; set; }
         public string UserId { get; set; }
-        public string[] MemberId { get; set; }
+        public List<string> MemberId { get; set; } = [];
         public string Chat { get; set; }
     }
 }
