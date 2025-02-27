@@ -13,7 +13,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock FontSize="16"/>
+                        <TextBlock Text="" FontSize="16"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
