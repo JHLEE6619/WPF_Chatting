@@ -34,16 +34,17 @@ namespace Chatting
             
         }
 
-        // 목록에서 클릭한 채팅방의 인덱스를 이용해 방번호를 찾는다.
         private void Chat_room_click(object sender, SelectionChangedEventArgs e)
         {
             if (LV_chat_room_list.SelectedIndex == -1)
                 return;
-            int idx = LV_chat_room_list.SelectedIndex; // idx는 채팅방목록의 idx와 같다.
+            int idx = LV_chat_room_list.SelectedIndex;
             LV_chat_room_list.SelectedItem = null;
-            byte roomId = Global_Data.UI.ChatRoomList[idx].Item1; // idx로 방번호를 찾음
-            Chat_room chat_room = new(clnt ,roomId); // 방 번호를 채팅방 화면으로 넘겨줌
+            // LINQ 메서드 ElementAt : 인덱스가 없는 딕셔너리를 인덱스가 있는것처럼 찾게 해줌
+            byte roomId = Global_Data.UI.ChatRoomList.ElementAt(idx).Key;
+            Chat_room chat_room = new(clnt, roomId);
             chat_room.Show();
+
         }
     }
 }

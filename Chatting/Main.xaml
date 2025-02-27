@@ -17,7 +17,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock Text="{Binding ConnectedUser}" x:Name="Tblock_userId" FontSize="16"/>
+                        <TextBlock Text="{Binding}" x:Name="Tblock_userId" FontSize="16"/>
                         <CheckBox x:Name="ChkBox_invitaition" IsChecked="False"/>
                     </StackPanel>
                 </DataTemplate>

@@ -144,7 +144,7 @@ namespace Chatting_Server
                 foreach (var user in connectedUser) // 유저당 대화방리스트를 만듦
                 {
                     Send_Message msg = new() { MsgId = (byte)MsgId.CREATE_ROOM };
-                    ObservableCollection<(byte, List<string>)> chatRoomList = [];
+                    Dictionary<byte, string> chatRoomList = [];
                     foreach (var chatRoom in chat_room_list)
                     {
                         foreach (var memberId in chatRoom.Value)
@@ -152,7 +152,9 @@ namespace Chatting_Server
                             // 접속한 유저id와 구성원id가 같으면, 유저당 대화방리스트에 추가
                             if (user.Key.Equals(memberId))
                             {
-                                chatRoomList.Add((chatRoom.Key, chatRoom.Value));
+                                // 리스트를 "A, B, C" 와 같은 string으로 변환
+                                string memberList = String.Join(", ", chatRoom.Value.ToArray()); 
+                                chatRoomList.Add(chatRoom.Key, memberList);
                             }
                         }
                     }
@@ -163,6 +165,7 @@ namespace Chatting_Server
             }
         }
 
+
         private void Send_chatRoomList(NetworkStream stream, Send_Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
@@ -172,8 +175,6 @@ namespace Chatting_Server
 
         private void Add_chat(Receive_Message msg)
         {
-            // public ObservableCollection<(int, List<(string, string, DateTime)>)> ChatRecord
-            // static Dictionary<byte, List<(string, string, DateTime)>> chatRecord = []; // <roomId, chatRecord>
             // 방번호를 탐색 -> 그 방의 ChatRecord에 chat 추가
             DateTime now = DateTime.Now;
             lock (thisLock)
@@ -213,7 +214,7 @@ namespace Chatting_Server
         private void Send_chatRecord(NetworkStream stream, byte room_id)
         {
             Send_Message msg = new() { MsgId = (byte)MsgId.SEND_CHAT };
-            ObservableCollection<(string, string, DateTime)> chat = [];
+            List<(string, string, DateTime)> chat = [];
             foreach(var ch in chatRecord[room_id])
             {
                 chat.Add((ch.Item1, ch.Item2, ch.Item3));

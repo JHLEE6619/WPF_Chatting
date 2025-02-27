@@ -10,8 +10,7 @@ namespace Chatting.Model
 {
     public class Global_Data
     {
-        private static Receive_Message _ui = new();
-        public static Receive_Message UI => _ui; // 읽기 전용
+        public static Receive_Message UI { get; } = new(); // 읽기 전용
         public static string UserId { get; set; }
     }
 

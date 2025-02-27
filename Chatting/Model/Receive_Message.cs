@@ -12,10 +12,10 @@ namespace Chatting.Model
     {
         public byte MsgId { get; set; }
 
-        private ObservableCollection<string> _connectedUser = new();
-        public ObservableCollection<string> ConnectedUser
+        private List<string> _connectedUser = [];
+        public List<string> ConnectedUser
         {
-            get => _connectedUser;
+            get { return _connectedUser; }
             set
             {
                 _connectedUser = value;
@@ -23,10 +23,10 @@ namespace Chatting.Model
             }
         }
 
-        private ObservableCollection<(byte, List<string>)> _chatRoomList = new();
-        public ObservableCollection<(byte, List<string>)> ChatRoomList
+        private Dictionary<byte, string> _chatRoomList = [];
+        public Dictionary<byte, string> ChatRoomList
         {
-            get => _chatRoomList;
+            get { return _chatRoomList; }
             set
             {
                 _chatRoomList = value;
@@ -34,10 +34,10 @@ namespace Chatting.Model
             }
         }
 
-        private ObservableCollection<(string, string, DateTime)> _chatRecord = new();
-        public ObservableCollection<(string, string, DateTime)> ChatRecord
+        private List<(string, string, DateTime)> _chatRecord = [];
+        public List<(string, string, DateTime)> ChatRecord
         {
-            get => _chatRecord;
+            get { return _chatRecord; }
             set
             {
                 _chatRecord = value;
