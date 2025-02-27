@@ -9,7 +9,7 @@
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="30,30,0,0" TextWrapping="Wrap"
             Text="대화방" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <ListView x:Name="LV_chat_room_list" Margin="0,140,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="380">
+        <ListView x:Name="LV_chat_record" Margin="0,140,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="330">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
@@ -20,8 +20,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Content="파일 전송" FontSize="16" HorizontalAlignment="Left" Margin="40,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.923,0.526" Width="100"/>
-        <Button Content="초대하기" FontSize="16" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.923,0.526" Width="100"/>
-        <Button Content="퇴장" FontSize="16" HorizontalAlignment="Left" Margin="310,100,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.923,0.526" Width="100"/>
+        <Button Content="파일 전송" FontSize="16" HorizontalAlignment="Left" Margin="40,100,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="btn_invite" Content="초대하기" FontSize="16" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Width="100" Click="btn_invite_Click"/>
+        <Button x:Name="btn_exit" Content="퇴장" FontSize="16" HorizontalAlignment="Left" Margin="310,100,0,0" VerticalAlignment="Top" Width="100" Click="btn_exit_Click"/>
+        <TextBox x:Name="Tbox_chat" FontSize="16" HorizontalAlignment="Left" Margin="40,500,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <Button x:Name="btn_send_chat" Content="전송" FontSize="16" HorizontalAlignment="Left" Margin="360,499,0,0" VerticalAlignment="Top" Width="50" Click="btn_send_chat_Click"/>
     </Grid>
 </Window>

@@ -13,9 +13,9 @@
                    TextWrapping="Wrap" Text="카카오톡" VerticalAlignment="Top" 
                    FontSize="44" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="94,0,0,0" TextWrapping="Wrap" Text="아이디" VerticalAlignment="Center" FontSize="16"/>
-        <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="145" FontSize="16" Margin="180,0,0,0"/>
+        <TextBox x:Name="TBox_id" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="145" FontSize="16" Margin="180,0,0,0"/>
         <TextBlock HorizontalAlignment="Left" Margin="94,333,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="비밀번호"/>
-        <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontSize="16" Margin="180,332,0,0"/>
+        <TextBox x:Name="TBox_pw" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" FontSize="16" Margin="180,332,0,0"/>
         <Button x:Name="btn_join" Content="회원가입" HorizontalAlignment="Left" Margin="94,379,0,0" VerticalAlignment="Top" FontSize="16" Width="100" Click="Btn_join_click"/>
         <Button x:Name="btn_login" Content="로그인" HorizontalAlignment="Left" Margin="225,379,0,0" VerticalAlignment="Top" FontSize="16" Width="100" Click="btn_login_Click"/>
 

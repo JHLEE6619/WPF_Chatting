@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\
 Chatting
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\App.xaml
-6-1219001392
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\App.xaml
+7-1737348210
 
-17-20993582
-1991284753933
-Chat_room.xaml;Chat_room_list.xaml;Join.xaml;Login.xaml;Main.xaml;MainWindow.xaml;
+19-1364848846
+199-1101196130
+Chat_room.xaml;Chat_room_list.xaml;Invite.xaml;Join.xaml;Login.xaml;Main.xaml;MainWindow.xaml;
 
-True
+False
 

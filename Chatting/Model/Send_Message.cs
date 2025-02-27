@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chatting.Model
 {
-    class Send_Message
+    public class Send_Message
     {
         public byte MsgId { get; set; }
         public byte RoomId { get; set; }

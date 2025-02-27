@@ -15,7 +15,8 @@ namespace Chatting
     {
         static TcpClient tc = new TcpClient("127.0.0.1", 10000);
         static NetworkStream stream = tc.GetStream();
-        public static Receive_Message UI { get; set; }
+        private readonly object thisLock = new();
+
         public enum MsgId : byte
         {
             JOIN, LOGIN, CREATE_ROOM, SEND_CHAT, SEND_FILE, INVITE, EXIT, LOGOUT
@@ -39,7 +40,8 @@ namespace Chatting
                     await stream.ReadAsync(buf, 0, buf.Length);
                     string json = Encoding.UTF8.GetString(buf);
                     msg = JsonConvert.DeserializeObject<Receive_Message>(json);
-                    Handler(msg);
+                    // 데이터를 수신하면 스레드를 생성해 처리
+                    Task.Run(() => Handler(msg));
                 }
             }
             catch { }
@@ -53,23 +55,26 @@ namespace Chatting
 
         private void Handler(Receive_Message msg)
         {
-            switch (msg.MsgId)
+            lock (thisLock)
             {
-                case (byte)MsgId.LOGIN:
-                    UI.ConnectedUser = rcv_itemList(msg.ConnectedUser);
-                    break;
-                case (byte)MsgId.CREATE_ROOM:
-                    UI.ChatRoomList = rcv_itemList(msg.ChatRoomList);
-                    break;
-                case (byte)MsgId.SEND_CHAT:
-                    UI.ChatRecord = rcv_itemList(msg.ChatRecord);
-                    break;
-                case (byte)MsgId.SEND_FILE: 
-                    
-                    break;
-                case (byte)MsgId.EXIT:
-                    UI.ConnectedUser = rcv_itemList(msg.ConnectedUser);
-                    break;
+                switch (msg.MsgId)
+                {
+                    case (byte)MsgId.LOGIN:
+                        Global_Data.UI.ConnectedUser = msg.ConnectedUser;
+                        break;
+                    case (byte)MsgId.CREATE_ROOM:
+                        Global_Data.UI.ChatRoomList = msg.ChatRoomList;
+                        break;
+                    case (byte)MsgId.SEND_CHAT:
+                        Global_Data.UI.ChatRecord = msg.ChatRecord;
+                        break;
+                    case (byte)MsgId.SEND_FILE:
+
+                        break;
+                    case (byte)MsgId.EXIT:
+                        Global_Data.UI.ConnectedUser = msg.ConnectedUser;
+                        break;
+                }
             }
         }
 
@@ -80,17 +85,18 @@ namespace Chatting
             return sendMsg;
         }
 
-        public void Login(string userId)
+        private Receive_Message DeserializeToJson(byte[] buf)
         {
-            Send_Message msg = new() { MsgId = (byte)MsgId.LOGIN, UserId = userId};
-            byte[] sendMsg = SerializeToJson(msg);
-            stream.WriteAsync(sendMsg, 0, sendMsg.Length).ConfigureAwait(false);
+            Receive_Message rcvMsg;
+            string json = Encoding.UTF8.GetString(buf);
+            rcvMsg = JsonConvert.DeserializeObject<Receive_Message>(json);
+            return rcvMsg;
         }
 
-        // 일반화 메소드
-        private ObservableCollection<T> rcv_itemList<T>(ObservableCollection<T> itemList)
+        public void Send_msg(Send_Message msg)
         {
-            return itemList;
+            byte[] sendMsg = SerializeToJson(msg);
+            stream.WriteAsync(sendMsg).ConfigureAwait(false);
         }
     }
 }

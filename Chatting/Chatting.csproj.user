@@ -8,6 +8,9 @@
     <Compile Update="Chat_room_list.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Invite.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Join.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Chatting.Model;
 
 namespace Chatting
 {
@@ -33,6 +34,7 @@ namespace Chatting
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
         {
+            Global_Data.UserId = TBox_id.Text;
             Main main = new();
             this.NavigationService.Navigate(main);
         }
