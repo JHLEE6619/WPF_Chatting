@@ -8,48 +8,20 @@ using System.Threading.Tasks;
 
 namespace Chatting.Model
 {
-    public class Receive_Message : INotifyPropertyChanged
+    public class Receive_Message
     {
         public byte MsgId { get; set; }
 
-        private List<string> _connectedUser = [];
-        public List<string> ConnectedUser
-        {
-            get { return _connectedUser; }
-            set
-            {
-                _connectedUser = value;
-                OnPropertyChanged(nameof(ConnectedUser));
-            }
-        }
+        public string UserId { get; set; }
 
-        private Dictionary<byte, string> _chatRoomList = [];
-        public Dictionary<byte, string> ChatRoomList
-        {
-            get { return _chatRoomList; }
-            set
-            {
-                _chatRoomList = value;
-                OnPropertyChanged(nameof(ChatRoomList));
-            }
-        }
+        public List<string> ConnectedUser { get; set; } = [];
 
-        private List<(string, string, DateTime)> _chatRecord = [];
-        public List<(string, string, DateTime)> ChatRecord
-        {
-            get { return _chatRecord; }
-            set
-            {
-                _chatRecord = value;
-                OnPropertyChanged(nameof(ChatRecord));
-            }
-        }
+        public Dictionary<byte, string> ChatRoomList { get; set; } = [];
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        public List<(string, string, DateTime)> ChatRecord { get; set; } = [];
+        
+        
+
     }
 
 }

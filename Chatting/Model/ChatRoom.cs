@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chatting.Model
 {
-    class Chat_room
+    public class ChatRoom
     {
         public byte RoomId { get; set; }
-        public string[] MemberId { get; set; }
+        public string MemberId { get; set; }
     }
 }

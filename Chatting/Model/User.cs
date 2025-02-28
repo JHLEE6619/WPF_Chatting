@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Chatting.Model
 {
-    class User
+    public class User
     {
-        public ObservableCollection<string> UserList{ get; set; }
+        public string UserId { get; set; }
+        public bool IsChecked { get; set; } = false;
     }
 }

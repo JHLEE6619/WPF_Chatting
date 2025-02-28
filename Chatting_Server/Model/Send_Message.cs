@@ -10,6 +10,8 @@ namespace Chatting_Server.Model
     class Send_Message
     {
         public byte MsgId { get; set; }
+        // 로그인한 유저(id)
+        public string UserId { get; set; }
         // 접속중인 유저 목록(id)
         public List<string> ConnectedUser { get; set; } = [];
         // 대화방 목록(방번호, 구성원id) 

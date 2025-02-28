@@ -19,7 +19,7 @@ namespace Chatting
 
         public enum MsgId : byte
         {
-            JOIN, LOGIN, CREATE_ROOM, SEND_CHAT, SEND_FILE, INVITE, EXIT, LOGOUT
+            JOIN, LOGIN, ADD_USER, CREATE_ROOM, CHAT_ROOM_lIST, ENTER_CHAT_ROOM, SEND_CHAT, SEND_FILE, INVITE, EXIT, REMOVE_MEMBER, LOGOUT, REMOVE_USER
         }
 
         public void ConnectServer()
@@ -59,24 +59,36 @@ namespace Chatting
             {
                 switch (msg.MsgId)
                 {
-                    case (byte)MsgId.LOGIN:
+                    case (byte)MsgId.LOGIN: // 할당
                         Global_Data.UI.ConnectedUser = msg.ConnectedUser;
                         break;
-                    case (byte)MsgId.CREATE_ROOM:
+                    case (byte)MsgId.ADD_USER: // Add
+                        //
+                        break;
+                    case (byte)MsgId.CREATE_ROOM: // Add
                         Global_Data.UI.ChatRoomList = msg.ChatRoomList;
                         break;
-                    case (byte)MsgId.SEND_CHAT:
+                    case (byte)MsgId.CHAT_ROOM_lIST: // 할당
+                        //
+                        break;
+                    case (byte)MsgId.ENTER_CHAT_ROOM: // 할당
+                        //
+                        break;
+                    case (byte)MsgId.SEND_CHAT: // Add
                         Global_Data.UI.ChatRecord = msg.ChatRecord;
                         break;
                     case (byte)MsgId.SEND_FILE:
 
                         break;
-                    case (byte)MsgId.EXIT:
+                    case (byte)MsgId.EXIT: // Remove
                         Global_Data.UI.ConnectedUser = msg.ConnectedUser;
                         break;
                 }
             }
         }
+        // 채팅방 입장전 -> 다른유저 채팅 -> add
+        // 채팅방 첫입장 -> 채팅기록 보내줌 -> 할당 -> 채팅방 창닫기 -> 다른유저가 채팅보냄 -> ADD -> 다시 채팅방 입장 -> 채팅기록 보내줌 ->할당
+        // 채팅방 리스트 첫입장 -> 채팅방 리스트 보내줌 -> 할당 -> 창닫기 ->
 
         private byte[] SerializeToJson(Send_Message msg)
         {

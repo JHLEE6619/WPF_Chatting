@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chatting.Model
 {
-    class Chat
+    public class Chat
     {
         public string UserId { get; set; }
         public string Msg { get; set; }
