@@ -9,13 +9,13 @@
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="30,30,0,0" TextWrapping="Wrap"
            Text="초대하기" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <Button x:Name="btn_invite"  Content="초대하기" Margin="0,130,40,0" VerticalAlignment="Top" FontSize="18" HorizontalAlignment="Right" Width="145" Click="btn_create_chat_room_Click"/>
+        <Button x:Name="btn_invite"  Content="초대하기" Margin="0,130,40,0" VerticalAlignment="Top" FontSize="18" HorizontalAlignment="Right" Width="145"/>
         <ListView x:Name="LV_user_list" Margin="0,180,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="340">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock x:Name="Tblock_userId" FontSize="16"/>
-                        <CheckBox x:Name="ChkBox_invitaition" IsChecked="False"/>
+                        <TextBlock Text="{Binding}" FontSize="16"/>
+                        <CheckBox IsChecked="False" Checked="check"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

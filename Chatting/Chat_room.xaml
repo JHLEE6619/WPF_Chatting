@@ -13,9 +13,9 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock FontSize="16"/>
-                        <TextBlock FontSize="16"/>
-                        <TextBlock FontSize="16"/>
+                        <TextBlock Text="{Binding Item1}" FontSize="16"/>
+                        <TextBlock Text="{Binding Item2}" FontSize="16"/>
+                        <TextBlock Text="{Binding Item3}" FontSize="16"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,26 +36,24 @@ namespace Chatting
 
         private List<string> Create_userList(byte roomId)
         {
-            List<string> userList = [];
-            foreach (var item_chatRoom in Global_Data.UI.ChatRoomList)
+            List<string> userList = Global_Data.UI.ConnectedUser;
+            string[] memberList = Global_Data.UI.ChatRoomList[roomId].Split(", ");
+            foreach(var user in userList)
             {
-                // 방번호로 해당 방을 찾음
-                if (item_chatRoom.Item1 == roomId)
+                foreach(var member in memberList)
                 {
-                    // 그 방 멤버와 접속중인 유저를 교차조회 하여
-                    // 일치하지 않는 ID만 리스트에 추가
-                    foreach (var item_userId in Global_Data.UI.ConnectedUser)
-                    {
-                        foreach (var item_memberId in item_chatRoom.Item2)
-                        {
-                            if (!item_memberId.Equals(item_userId))
-                                userList.Add(item_memberId);
-                        }
-                    }
-                    break;
+                    if (member.Equals(user))
+                        userList.Remove(member);
                 }
             }
+
             return userList;
+        }
+
+        private void check(object sender, RoutedEventArgs e)
+        {
+
+
         }
     }
 }

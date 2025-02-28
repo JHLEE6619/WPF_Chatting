@@ -25,3 +25,17 @@ C:\Users\LMS\source\repos\Chatting\obj\Debug\net8.0-windows\Join.g.cs
 C:\Users\LMS\source\repos\Chatting\obj\Debug\net8.0-windows\Join.baml
 C:\Users\LMS\source\repos\Chatting\obj\Debug\net8.0-windows\Main.g.cs
 C:\Users\LMS\source\repos\Chatting\obj\Debug\net8.0-windows\Main.baml
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting.csproj.AssemblyReference.cache
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chat_room.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chat_room_list.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Invite.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Join.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Login.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Main.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting_MarkupCompile.cache
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting_MarkupCompile.lref
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting.dll
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\refint\Chatting.dll
+C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting.pdb
