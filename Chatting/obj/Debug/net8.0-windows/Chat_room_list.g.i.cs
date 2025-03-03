@@ -61,7 +61,7 @@ namespace Chatting {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Chatting;component/chat_room_list.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Chatting;V1.0.0.0;component/chat_room_list.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Chat_room_list.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
