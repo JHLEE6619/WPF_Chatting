@@ -29,6 +29,7 @@ namespace Chatting
         {
             InitializeComponent();
             this.clnt = clnt;
+            this.clnt.chat_room_list = this;
             LV_chat_room_list.ItemsSource = Global_Data.ChatRoomList;
             
         }

@@ -20,7 +20,7 @@ namespace Chatting
     /// </summary>
     public partial class Chat_room : Window
     {
-        private Client clnt = new();
+        private Client clnt;
         private byte roomId;
 
         public Chat_room()
@@ -32,6 +32,7 @@ namespace Chatting
         {
             InitializeComponent();
             this.clnt = clnt;
+            this.clnt.chat_room = this;
             this.roomId = roomId;
             // 채팅방 입장 시 채팅기록 전송
             LV_chat_record.ItemsSource = Global_Data.ChatRecord[roomId];
@@ -44,7 +45,8 @@ namespace Chatting
 
         private Send_Message Send_chat(string chat)
         {
-            DateTime time = DateTime.Now;
+                DateTime time = DateTime.Now;
+
             Send_Message msg = new() { MsgId = (byte)Client.MsgId.SEND_CHAT, UserId = Global_Data.UserId, RoomId = roomId, Chat = chat, Time = time };
             return msg;
         }

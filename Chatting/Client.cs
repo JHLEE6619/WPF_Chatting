@@ -15,12 +15,22 @@ namespace Chatting
     public class Client
     {
         static TcpClient tc = new TcpClient("127.0.0.1", 10000);
-        static NetworkStream stream = tc.GetStream();
+        NetworkStream stream = tc.GetStream();
         private readonly object thisLock = new();
+        Main main;
+        public Chat_room_list chat_room_list;
+        public Chat_room chat_room;
+
+
+        public Client(Main main)
+        {
+            this.main = main;
+        }
+
 
         public enum MsgId : byte
         {
-            JOIN, LOGIN, ADD_USER, CREATE_ROOM, ENTER_CHAT_ROOM, SEND_CHAT, SEND_CHAT_RECORD, SEND_FILE, INVITE, EXIT, REMOVE_MEMBER, LOGOUT, REMOVE_USER
+            JOIN, LOGIN, ADD_USER, CREATE_ROOM, SEND_CHAT, SEND_CHAT_RECORD, SEND_FILE, INVITE, EXIT, LOGOUT
         }
 
         public void ConnectServer()
@@ -38,11 +48,11 @@ namespace Chatting
             {
                 while (true)
                 {
-                    await stream.ReadAsync(buf, 0, buf.Length);
-                    string json = Encoding.UTF8.GetString(buf);
+                    int len = await stream.ReadAsync(buf, 0, buf.Length);
+                    string json = Encoding.UTF8.GetString(buf, 0, len);
                     msg = JsonConvert.DeserializeObject<Receive_Message>(json);
                     // 데이터를 수신하면 스레드를 생성해 처리
-                    Task.Run(() => Handler(msg));
+                    await Handler(msg);
                 }
             }
             catch { }
@@ -54,7 +64,7 @@ namespace Chatting
         }
 
 
-        private void Handler(Receive_Message msg)
+        private async Task Handler(Receive_Message msg)
         {
             lock (thisLock)
             {
@@ -62,12 +72,15 @@ namespace Chatting
                 {
                     case (byte)MsgId.LOGIN: // 할당
                         Receive_userList(msg.ConnectedUser);
+                        System.Diagnostics.Debug.WriteLine("로그인");
                         break;
                     case (byte)MsgId.ADD_USER: // Add
                         Add_user(msg.UserId);
+                        System.Diagnostics.Debug.WriteLine("유저 추가");
                         break;
                     case (byte)MsgId.CREATE_ROOM: // Add
                         Create_room(msg.RoomId, msg.UserId);
+                        System.Diagnostics.Debug.WriteLine("방 생성");
                         break;
                     case (byte)MsgId.SEND_CHAT: // Add
                         Add_chat(msg);
@@ -99,13 +112,14 @@ namespace Chatting
         private void Add_user(string userId)
         {
             User user = new() { UserId = userId };
-            //this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
-            //{
-            //}));
-            lock (thisLock)
+
+            main.Dispatcher.BeginInvoke(() =>
             {
-                Global_Data.UserList.Add(user);
-            }
+                lock (thisLock)
+                {
+                    Global_Data.UserList.Add(user);
+                }
+            });
 
 
         }
@@ -113,7 +127,43 @@ namespace Chatting
         private void Create_room(byte roomId, string memberId)
         {
             ChatRoom chatRoom = new() { RoomId = roomId, MemberId = memberId };
-            Global_Data.ChatRoomList.Add(chatRoom);
+            ObservableCollection<Chat> chat = [];
+            // dispatcher
+            if (chat_room_list != null)
+            {
+                chat_room.Dispatcher.BeginInvoke(() =>
+                {
+                    lock (thisLock)
+                    {
+                        Global_Data.ChatRoomList.Add(chatRoom);
+                    }
+                });
+            }
+            else
+            {
+                lock (thisLock)
+                {
+                    Global_Data.ChatRoomList.Add(chatRoom);
+                }
+            }
+
+            if (chat_room != null)
+            {
+                chat_room.Dispatcher.BeginInvoke(() =>
+                {
+                    lock (thisLock)
+                    {
+                        Global_Data.ChatRecord.Add(roomId, chat);
+                    }
+                });
+            }
+            else
+            {
+                lock (thisLock)
+                {
+                    Global_Data.ChatRecord.Add(roomId, chat);
+                }
+            }
         }
 
         private void Add_chat(Receive_Message msg)
@@ -125,16 +175,34 @@ namespace Chatting
                 Time = msg.Time
             };
 
-            if (Global_Data.ChatRecord.ContainsKey(msg.RoomId))
+            if (chat_room != null)
             {
-                Global_Data.ChatRecord[msg.RoomId].Add(chat);
+                chat_room.Dispatcher.BeginInvoke(() =>
+                {
+                    lock (thisLock)
+                    {
+                        Global_Data.ChatRecord[msg.RoomId].Add(chat);
+                    }
+                });
             }
             else
             {
-                ObservableCollection<Chat> chatRecord = [];
-                chatRecord.Add(chat);
-                Global_Data.ChatRecord.Add(msg.RoomId, chatRecord);
+                lock (thisLock)
+                {
+                    Global_Data.ChatRecord[msg.RoomId].Add(chat);
+                }
             }
+
+            //if (Global_Data.ChatRecord.ContainsKey(msg.RoomId))
+            //{
+            //    Global_Data.ChatRecord[msg.RoomId].Add(chat);
+            //}
+            //else
+            //{
+            //    ObservableCollection<Chat> chatRecord = [];
+            //    chatRecord.Add(chat);
+            //    Global_Data.ChatRecord.Add(msg.RoomId, chatRecord);
+            //}
         }
 
         private void Receive_chatRecord(byte roomId, List<(string, string, DateTime)> chatRecord)
@@ -191,14 +259,6 @@ namespace Chatting
             string json = JsonConvert.SerializeObject(msg);
             byte[] sendMsg = Encoding.UTF8.GetBytes(json);
             return sendMsg;
-        }
-
-        private Receive_Message DeserializeToJson(byte[] buf)
-        {
-            Receive_Message rcvMsg;
-            string json = Encoding.UTF8.GetString(buf);
-            rcvMsg = JsonConvert.DeserializeObject<Receive_Message>(json);
-            return rcvMsg;
         }
 
         public void Send_msg(Send_Message msg)

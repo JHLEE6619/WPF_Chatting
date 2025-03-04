@@ -21,14 +21,15 @@ namespace Chatting
     /// </summary>
     public partial class Main : Page
     {
-        Client clnt = new();
+        Client clnt;
 
         public Main()
         {
             InitializeComponent();
+            clnt = new(this);
             clnt.ConnectServer();
             clnt.Send_msg(Login(Global_Data.UserId));
-            Tblock_userId.Text = Global_Data.UserId;
+            Tblock_userId.Text = $"아이디 : {Global_Data.UserId}";
             LV_user_list.ItemsSource = Global_Data.UserList;
         }
 
