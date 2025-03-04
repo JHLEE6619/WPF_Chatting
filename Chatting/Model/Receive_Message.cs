@@ -17,9 +17,6 @@ namespace Chatting.Model
         public string Chat { get; set; }
         public DateTime Time { get; set; }
         public List<(string, string, DateTime)> ChatRecord { get; set; } = [];
-        
-        
-
     }
 
 }

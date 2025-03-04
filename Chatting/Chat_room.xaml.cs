@@ -20,7 +20,7 @@ namespace Chatting
     /// </summary>
     public partial class Chat_room : Window
     {
-        private Client clnt = new();
+        private Client clnt;
         private byte roomId;
 
         public Chat_room()

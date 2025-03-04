@@ -14,13 +14,21 @@ namespace Chatting
 {
     public class Client
     {
-        static TcpClient tc = new TcpClient("127.0.0.1", 10000);
-        static NetworkStream stream = tc.GetStream();
+        public TcpClient tc = new TcpClient("127.0.0.1", 10000);
+        public NetworkStream stream;
         private readonly object thisLock = new();
+        Main main;
+
 
         public enum MsgId : byte
         {
             JOIN, LOGIN, ADD_USER, CREATE_ROOM, ENTER_CHAT_ROOM, SEND_CHAT, SEND_CHAT_RECORD, SEND_FILE, INVITE, EXIT, REMOVE_MEMBER, LOGOUT, REMOVE_USER
+        }
+
+        public Client(Main main)
+        {
+            this.main = main;
+            stream = tc.GetStream();
         }
 
         public void ConnectServer()
@@ -38,9 +46,12 @@ namespace Chatting
             {
                 while (true)
                 {
-                    await stream.ReadAsync(buf, 0, buf.Length);
-                    string json = Encoding.UTF8.GetString(buf);
-                    msg = JsonConvert.DeserializeObject<Receive_Message>(json);
+                    int len = await stream.ReadAsync(buf, 0, buf.Length);
+                    string json = Encoding.UTF8.GetString(buf, 0, len);
+                    lock (thisLock)
+                    {
+                        msg = JsonConvert.DeserializeObject<Receive_Message>(json);
+                    }
                     // 데이터를 수신하면 스레드를 생성해 처리
                     Task.Run(() => Handler(msg));
                 }
@@ -56,35 +67,40 @@ namespace Chatting
 
         private void Handler(Receive_Message msg)
         {
-            lock (thisLock)
+
+            switch (msg.MsgId)
             {
-                switch (msg.MsgId)
-                {
-                    case (byte)MsgId.LOGIN: // 할당
-                        Receive_userList(msg.ConnectedUser);
-                        break;
-                    case (byte)MsgId.ADD_USER: // Add
-                        Add_user(msg.UserId);
-                        break;
-                    case (byte)MsgId.CREATE_ROOM: // Add
-                        Create_room(msg.RoomId, msg.UserId);
-                        break;
-                    case (byte)MsgId.SEND_CHAT: // Add
-                        Add_chat(msg);
-                        break;
-                    case (byte)MsgId.SEND_FILE:
-                        break;
-                    case (byte)MsgId.INVITE:
-                        Receive_chatRecord(msg.RoomId, msg.ChatRecord);
-                        break;
-                    case (byte)MsgId.EXIT: // Remove
-                        Receive_exit_room(msg.RoomId, msg.UserId);
-                        break;
-                    case (byte)MsgId.LOGOUT:
-                        Receive_logout(msg.UserId);
-                        break;
-                }
+                case (byte)MsgId.LOGIN: // 할당
+                    Receive_userList(msg.ConnectedUser);
+                    System.Diagnostics.Debug.WriteLine("로그인");
+                    break;
+                case (byte)MsgId.ADD_USER: // Add
+                    Add_user(msg.UserId);
+                    System.Diagnostics.Debug.WriteLine("유저 추가");
+                    foreach (var user in Global_Data.UserList)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"접속 유저 : {user.UserId}");
+                    }
+                    break;
+                case (byte)MsgId.CREATE_ROOM: // Add
+                    Create_room(msg.RoomId, msg.UserId);
+                    break;
+                case (byte)MsgId.SEND_CHAT: // Add
+                    Add_chat(msg);
+                    break;
+                case (byte)MsgId.SEND_FILE:
+                    break;
+                case (byte)MsgId.INVITE:
+                    Receive_chatRecord(msg.RoomId, msg.ChatRecord);
+                    break;
+                case (byte)MsgId.EXIT: // Remove
+                    Receive_exit_room(msg.RoomId, msg.UserId);
+                    break;
+                case (byte)MsgId.LOGOUT:
+                    Receive_logout(msg.UserId);
+                    break;
             }
+            
         }
 
 
@@ -99,13 +115,13 @@ namespace Chatting
         private void Add_user(string userId)
         {
             User user = new() { UserId = userId };
-            //this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
-            //{
-            //}));
-            lock (thisLock)
+            main.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             {
-                Global_Data.UserList.Add(user);
-            }
+                lock (thisLock)
+                {
+                    Global_Data.UserList.Add(user);
+                }
+            }));
 
 
         }
@@ -179,26 +195,27 @@ namespace Chatting
 
         private void Receive_logout(string userId)
         {
-            User user = new() { UserId = userId };
-            Global_Data.UserList.Remove(user);
+            
+            main.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+            {
+                foreach (var user in Global_Data.UserList)
+                {
+                    if (userId.Equals(user.UserId))
+                    {
+                        Global_Data.UserList.Remove(user);
+                        break;
+                    }
+                    
+                }
+            }));
+
         }
-        // 채팅방 입장전 -> 다른유저 채팅 -> add
-        // 채팅방 첫입장 -> 채팅기록 보내줌 -> 할당 -> 채팅방 창닫기 -> 다른유저가 채팅보냄 -> ADD -> 다시 채팅방 입장 -> 채팅기록 보내줌 ->할당
-        // 채팅방 리스트 첫입장 -> 채팅방 리스트 보내줌 -> 할당 -> 창닫기 ->
 
         private byte[] SerializeToJson(Send_Message msg)
         {
             string json = JsonConvert.SerializeObject(msg);
             byte[] sendMsg = Encoding.UTF8.GetBytes(json);
             return sendMsg;
-        }
-
-        private Receive_Message DeserializeToJson(byte[] buf)
-        {
-            Receive_Message rcvMsg;
-            string json = Encoding.UTF8.GetString(buf);
-            rcvMsg = JsonConvert.DeserializeObject<Receive_Message>(json);
-            return rcvMsg;
         }
 
         public void Send_msg(Send_Message msg)
