@@ -61,39 +61,3 @@ C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting.sou
 C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting.csproj.Up2Date
 C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\Chatting.genruntimeconfig.cache
 C:\Users\LMS\Desktop\WPF_Chatting\Chatting\obj\Debug\net8.0-windows\ref\Chatting.dll
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\bin\Debug\net8.0-windows\Chatting.exe
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\bin\Debug\net8.0-windows\Chatting.deps.json
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\bin\Debug\net8.0-windows\Chatting.runtimeconfig.json
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\bin\Debug\net8.0-windows\Chatting.dll
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\bin\Debug\net8.0-windows\Chatting.pdb
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.csproj.AssemblyReference.cache
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chat_room.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chat_room_list.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Invite.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Join.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Login.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Main.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\MainWindow.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\App.g.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting_MarkupCompile.cache
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting_MarkupCompile.lref
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chat_room.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chat_room_list.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Invite.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Join.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Login.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Main.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\MainWindow.baml
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.g.resources
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.AssemblyInfoInputs.cache
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.AssemblyInfo.cs
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.csproj.CoreCompileInputs.cache
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.sourcelink.json
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.csproj.Up2Date
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.dll
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\refint\Chatting.dll
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.pdb
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\Chatting.genruntimeconfig.cache
-C:\Users\ljh49\OneDrive\바탕 화면\WPF 채팅프로그램\Chatting\obj\Debug\net8.0-windows\ref\Chatting.dll

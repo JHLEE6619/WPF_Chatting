@@ -34,10 +34,12 @@ namespace Chatting_Server
             TcpListener listener = new TcpListener(IPAddress.Any, 10000);
             Console.WriteLine(" 서버 시작 ");
             listener.Start();
+            Console.WriteLine("1");
             while (true)
             {
                 TcpClient client =
                     await listener.AcceptTcpClientAsync().ConfigureAwait(false);
+                Console.WriteLine("2");
 
                 Task.Run(()=>ServerMain(client));
             }
@@ -56,8 +58,8 @@ namespace Chatting_Server
             {
                 while (true)
                 {
-                    int len = await stream.ReadAsync(buf, 0, buf.Length).ConfigureAwait(false);
-                    string json = Encoding.UTF8.GetString(buf, 0, len);
+                    await stream.ReadAsync(buf, 0, buf.Length).ConfigureAwait(false);
+                    string json = Encoding.UTF8.GetString(buf, 0, buf.Length);
                     msg = JsonConvert.DeserializeObject<Receive_Message>(json);
                     Handler(msg, stream);
                 }
@@ -80,7 +82,6 @@ namespace Chatting_Server
                 {
                     Console.WriteLine($"{user.Key} 연결 종료 ");
                     connectedUser.Remove(user.Key);
-                    LogOut(user.Key);
                     break;
                 }
             }
@@ -88,11 +89,15 @@ namespace Chatting_Server
 
         private void Handler(Receive_Message msg, NetworkStream stream)
         {
+
             switch (msg.MsgId)
             {
                 case (byte)MsgId.LOGIN: // 할당
+                    Console.WriteLine(" 로그인 1 ");
                     Send_userList(stream);
+                    Console.WriteLine(" 로그인 2 ");
                     Add_user(msg.UserId, stream);
+                    Console.WriteLine(" 로그인 3 ");
                     break;
                 case (byte)MsgId.CREATE_ROOM:
                     Console.WriteLine(" 방 생성 ");
@@ -141,8 +146,6 @@ namespace Chatting_Server
             foreach (var userId in connectedUser)
             {
                 msg.ConnectedUser.Add(userId.Key);
-                Console.WriteLine($"접속한 유저 : {userId.Key}");
-
             }
 
             byte[] bytes = Serialize_to_json(msg);
@@ -150,8 +153,6 @@ namespace Chatting_Server
 
             // 로그인한 유저 소켓으로 접속유저 리스트 전송
             stream.WriteAsync(bytes).ConfigureAwait(false); // await?  
-            int add = 0;
-            Console.WriteLine($"유저리스트 전송 횟수 : {++add}");
         }
 
         private void Add_user(string userId, NetworkStream stream)
@@ -159,24 +160,24 @@ namespace Chatting_Server
             lock (thisLock)
             {
                 connectedUser.Add(userId, stream);
+                foreach(var user in connectedUser)
+                {
+                    Console.WriteLine($"{user.Key}");
+                }
             }
+
             Send_add_user(userId);
         }
 
         private void Send_add_user(string userId)
         {
-
             Send_Message msg = new() { MsgId = (byte)MsgId.ADD_USER, UserId = userId};
             byte[] bytes = Serialize_to_json(msg);
-            lock (thisLock)
+            foreach (var user in connectedUser)
             {
-                foreach (var user in connectedUser)
-                {
-                    user.Value.WriteAsync(bytes).ConfigureAwait(false);
-                }
+                user.Value.WriteAsync(bytes).ConfigureAwait(false);
             }
-            int add = 0;
-            Console.WriteLine($"추가 횟수 : {++add}");
+
         }
 
         private void Create_chatRoom(List<string> memberId)
