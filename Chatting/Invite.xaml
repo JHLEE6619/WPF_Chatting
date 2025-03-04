@@ -9,13 +9,13 @@
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="30,30,0,0" TextWrapping="Wrap"
            Text="초대하기" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <Button x:Name="btn_invite"  Content="초대하기" Margin="0,130,40,0" VerticalAlignment="Top" FontSize="18" HorizontalAlignment="Right" Width="145"/>
+        <Button x:Name="btn_invite"  Content="초대하기" Margin="0,130,40,0" VerticalAlignment="Top" FontSize="18" HorizontalAlignment="Right" Width="145" Click="btn_invite_Click"/>
         <ListView x:Name="LV_user_list" Margin="0,180,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="340">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock Text="{Binding}" FontSize="16"/>
-                        <CheckBox IsChecked="False" Checked="check"/>
+                        <TextBlock Text="{Binding UserId}" FontSize="16"/>
+                        <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

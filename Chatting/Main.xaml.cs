@@ -28,7 +28,7 @@ namespace Chatting
             InitializeComponent();
             clnt.ConnectServer();
             clnt.Send_msg(Login(Global_Data.UserId));
-            LV_user_list.ItemsSource = Global_Data.UI.ConnectedUser;
+            LV_user_list.ItemsSource = Global_Data.UserList;
         }
 
         private void btn_chat_room_list_Click(object sender, RoutedEventArgs e)
@@ -39,10 +39,17 @@ namespace Chatting
 
         private void btn_create_chat_room_Click(object sender, RoutedEventArgs e)
         {
-            // 체크박스 true인 아이디 가져오는 구문 필요
             List<string> memberId = [];
-
+            foreach(var member in Global_Data.UserList)
+            {
+                if (member.IsChecked)
+                {
+                    memberId.Add(member.UserId);
+                    member.IsChecked = false;
+                }
+            }
             clnt.Send_msg(Create_chatRoom(memberId));
+            MessageBox.Show("대화방이 생성되었습니다.", "대화방 생성");
         }
 
         private Send_Message Login(string userId)

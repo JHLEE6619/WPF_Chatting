@@ -17,8 +17,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock Text="{Binding}" x:Name="Tblock_userId" FontSize="16"/>
-                        <CheckBox x:Name="ChkBox_invitaition" IsChecked="False"/>
+                        <TextBlock Text="{Binding UserId}" x:Name="Tblock_userId" FontSize="16"/>
+                        <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay}" x:Name="ChkBox_invitaition"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -14,8 +14,8 @@ namespace Chatting_Server.Model
         public string UserId { get; set; }
         // 접속중인 유저 목록(id)
         public List<string> ConnectedUser { get; set; } = [];
-        // 대화방 목록(방번호, 구성원id) 
-        public Dictionary<byte, string> ChatRoomList { get; set; } = [];
+        //// 대화방 목록(방번호, 구성원id) 
+        //public Dictionary<byte, string> ChatRoomList { get; set; } = [];
         // 방 번호
         public byte RoomId { get; set; }
         // 채팅 내용

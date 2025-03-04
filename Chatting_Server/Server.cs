@@ -34,10 +34,12 @@ namespace Chatting_Server
             TcpListener listener = new TcpListener(IPAddress.Any, 10000);
             Console.WriteLine(" 서버 시작 ");
             listener.Start();
+            Console.WriteLine("1");
             while (true)
             {
                 TcpClient client =
                     await listener.AcceptTcpClientAsync().ConfigureAwait(false);
+                Console.WriteLine("2");
 
                 Task.Run(()=>ServerMain(client));
             }
@@ -67,8 +69,21 @@ namespace Chatting_Server
             finally
             {
                 Console.WriteLine(" 클라이언트 연결 종료 ");
+                Disconnect_client(stream);
                 stream.Close();
                 tc.Close();
+            }
+        }
+
+        private void Disconnect_client(NetworkStream stream)
+        {
+            foreach(var user in connectedUser)
+            {
+                if(user.Value == stream)
+                {
+                    connectedUser.Remove(user.Key);
+                    break;
+                }
             }
         }
 
@@ -133,6 +148,14 @@ namespace Chatting_Server
             Send_add_user(userId, stream);
         }
 
+        private void Send_add_user(string userId, NetworkStream stream)
+        {
+            Send_Message msg = new() { MsgId = (byte)MsgId.ADD_USER, UserId = userId};
+            byte[] bytes = Serialize_to_json(msg);
+            stream.WriteAsync(bytes).ConfigureAwait(false);
+
+        }
+
         private void Send_userList(NetworkStream stream)
         {
             Send_Message msg = new() { MsgId = (byte)MsgId.LOGIN };
@@ -143,15 +166,7 @@ namespace Chatting_Server
             byte[] bytes = Serialize_to_json(msg);
 
             // 로그인한 유저 소켓으로 접속유저 리스트 전송
-            stream.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false) ; // await?  
-        }
-
-        private void Send_add_user(string userId, NetworkStream stream)
-        {
-            Send_Message msg = new() { MsgId = (byte)MsgId.ADD_USER, UserId = userId};
-            byte[] bytes = Serialize_to_json(msg);
-            stream.Write(bytes);
-
+            stream.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false); // await?  
         }
 
         private void Create_chatRoom(List<string> memberId)
@@ -165,14 +180,12 @@ namespace Chatting_Server
         private void Send_add_chatRoom(List<string> memberId)
         {
             string memberList = String.Join(", ", memberId.ToArray());
-            Dictionary<byte, string> chatRoomList = [];
             List<NetworkStream> socket = Search_socket(memberId);
-            chatRoomList.Add(roomId, memberList);
-            Send_Message msg = new() { MsgId = (byte)MsgId.CREATE_ROOM, ChatRoomList = chatRoomList };
+            Send_Message msg = new() { MsgId = (byte)MsgId.CREATE_ROOM, RoomId = roomId, UserId = memberList };
             byte[] buf = Serialize_to_json(msg);
             foreach(var stream in socket)
             {
-                stream.Write(buf);
+                stream.WriteAsync(buf).ConfigureAwait(false);
             }
         }
 
@@ -204,27 +217,10 @@ namespace Chatting_Server
             List<NetworkStream> socket = Search_socket(chat_room_list[receive_msg.RoomId]);
             foreach (var stream in socket)
             {
-                stream.Write(buf);
+                stream.WriteAsync(buf).ConfigureAwait(false);
             }
         }
 
-        private List<NetworkStream> Search_socket(List<string> userList)
-        {
-            List<NetworkStream> socket = [];
-            
-            foreach (var userId in userList)
-            {
-                foreach(var sock in connectedUser)
-                {
-                    if (sock.Key.Equals(userId))
-                    {
-                        socket.Add(sock.Value);
-                        break;
-                    }
-                }
-            }
-            return socket;
-        }
 
         private void Send_chatRecord(byte roomId, List<string> memberList)
         {
@@ -255,14 +251,12 @@ namespace Chatting_Server
         {
             List<string> memberId = chat_room_list[roomId];
             string memberList = String.Join(", ", memberId.ToArray());
-            Dictionary<byte, string> chatRoomList = [];
             List<NetworkStream> socket = Search_socket(memberId);
-            chatRoomList.Add(roomId, memberList);
-            Send_Message msg = new() { MsgId = (byte)MsgId.CREATE_ROOM, ChatRoomList = chatRoomList };
+            Send_Message msg = new() { MsgId = (byte)MsgId.INVITE, RoomId = roomId, UserId = memberList };
             byte[] buf = Serialize_to_json(msg);
             foreach (var stream in socket)
             {
-                stream.Write(buf);
+                stream.WriteAsync(buf).ConfigureAwait(false);
             }
         }
 
@@ -279,7 +273,7 @@ namespace Chatting_Server
             List<NetworkStream> socket = Search_socket(chat_room_list[roomId]);
             foreach (var stream in socket)
             {
-                stream.Write(buf);
+                stream.WriteAsync(buf).ConfigureAwait(false);
             }
 
 
@@ -300,8 +294,26 @@ namespace Chatting_Server
             byte[] bytes = Serialize_to_json(msg);
             foreach (var user in connectedUser)
             {
-                user.Value.Write(bytes);
+                user.Value.WriteAsync(bytes).ConfigureAwait(false);
             }
+        }
+
+        private List<NetworkStream> Search_socket(List<string> userList)
+        {
+            List<NetworkStream> socket = [];
+            
+            foreach (var userId in userList)
+            {
+                foreach(var sock in connectedUser)
+                {
+                    if (sock.Key.Equals(userId))
+                    {
+                        socket.Add(sock.Value);
+                        break;
+                    }
+                }
+            }
+            return socket;
         }
     }
 }

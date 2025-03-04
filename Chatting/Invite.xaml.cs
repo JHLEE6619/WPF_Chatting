@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,38 +23,67 @@ namespace Chatting
     /// </summary>
     public partial class Invite : Window
     {
+        private ObservableCollection<User> userList = [];
+        private Client clnt;
         public Invite()
         {
             InitializeComponent();
         }
-        public Invite(byte roomId)
+        public Invite(byte roomId, Client clnt)
         {
             InitializeComponent();
-            List<string> userList = Create_userList(roomId);
+            this.clnt = clnt;
+            userList = Create_userList(roomId);
             LV_user_list.ItemsSource = userList;
              
         }
 
-        private List<string> Create_userList(byte roomId)
+        private ObservableCollection<User> Create_userList(byte roomId)
         {
-            List<string> userList = Global_Data.UI.ConnectedUser;
-            string[] memberList = Global_Data.UI.ChatRoomList[roomId].Split(", ");
-            foreach(var user in userList)
+            ObservableCollection<User> userList = Global_Data.UserList;
+            string[] memberList = [];
+            foreach (var chatRoom in Global_Data.ChatRoomList)
+            {
+                if (chatRoom.RoomId == roomId)
+                {
+                    memberList = chatRoom.MemberId.Split(", ");
+                    break;
+                }
+            }
+
+            foreach (var user in userList)
             {
                 foreach(var member in memberList)
                 {
                     if (member.Equals(user))
-                        userList.Remove(member);
+                        userList.Remove(user);
                 }
             }
 
             return userList;
         }
 
-        private void check(object sender, RoutedEventArgs e)
+        private void btn_invite_Click(object sender, RoutedEventArgs e)
         {
-
-
+            List<string> memberId = [];
+            foreach(var user in userList)
+            {
+                if (user.IsChecked)
+                {
+                    memberId.Add(user.UserId);
+                    userList.Remove(user);
+                }
+            }
+            clnt.Send_msg(Invite_member(memberId));
+            MessageBox.Show("초대가 완료되었습니다.", "초대 완료");
         }
+
+        private Send_Message Invite_member(List<string> memberId)
+        {
+            Send_Message msg = new() { MsgId = (byte)Client.MsgId.INVITE, MemberId = memberId };
+            return msg;
+        }
+
+
     }
 }

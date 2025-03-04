@@ -29,8 +29,7 @@ namespace Chatting
         {
             InitializeComponent();
             this.clnt = clnt;
-
-            LV_chat_room_list.ItemsSource = Global_Data.UI.ChatRoomList;
+            LV_chat_room_list.ItemsSource = Global_Data.ChatRoomList;
             
         }
 
@@ -40,8 +39,7 @@ namespace Chatting
                 return;
             int idx = LV_chat_room_list.SelectedIndex;
             LV_chat_room_list.SelectedItem = null;
-            // LINQ 메서드 ElementAt : 인덱스가 없는 딕셔너리를 인덱스가 있는것처럼 찾게 해줌
-            byte roomId = Global_Data.UI.ChatRoomList.ElementAt(idx).Key;
+            byte roomId = Global_Data.ChatRoomList[idx].RoomId;
             Chat_room chat_room = new(clnt, roomId);
             chat_room.Show();
 

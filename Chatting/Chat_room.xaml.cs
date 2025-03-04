@@ -34,7 +34,7 @@ namespace Chatting
             this.clnt = clnt;
             this.roomId = roomId;
             // 채팅방 입장 시 채팅기록 전송
-            LV_chat_record.ItemsSource = Global_Data.UI.ChatRecord;
+            LV_chat_record.ItemsSource = Global_Data.ChatRecord[roomId];
         }
 
         private void btn_send_chat_Click(object sender, RoutedEventArgs e)
@@ -51,13 +51,14 @@ namespace Chatting
 
         private void btn_invite_Click(object sender, RoutedEventArgs e)
         {
-            Invite invite = new(roomId);
+            Invite invite = new(roomId, clnt);
             invite.Show();
         }
 
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
             clnt.Send_msg(Exit(roomId));
+            this.Close();
         }
 
         private Send_Message Exit(byte roomId)

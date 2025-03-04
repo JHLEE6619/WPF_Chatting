@@ -12,7 +12,7 @@ namespace Chatting.Model
     {
         public static ObservableCollection<User> UserList { get; set; } = [];
         public static ObservableCollection<ChatRoom> ChatRoomList { get; set; } = [];
-        public static ObservableCollection<Chat> ChatRecord { get; set; } = [];
+        public static Dictionary<byte, ObservableCollection<Chat>> ChatRecord { get; set; } = [];
         public static string UserId { get; set; }
     }
 
