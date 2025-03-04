@@ -26,7 +26,7 @@ namespace Chatting_Server
 
         private enum MsgId : byte
         {
-            JOIN, LOGIN, ADD_USER, CREATE_ROOM, CHAT_ROOM_lIST, ENTER_CHAT_ROOM, SEND_CHAT, SEND_FILE, INVITE, EXIT, REMOVE_MEMBER, LOGOUT, REMOVE_USER
+            JOIN, LOGIN, ADD_USER, CREATE_ROOM, CHAT_ROOM_lIST, ENTER_CHAT_ROOM, SEND_CHAT, SEND_CHAT_RECORD, SEND_FILE, INVITE, EXIT, REMOVE_MEMBER, LOGOUT, REMOVE_USER
         }
 
         public async Task StartServer()
@@ -95,7 +95,7 @@ namespace Chatting_Server
                 case (byte)MsgId.SEND_CHAT:
                     Console.WriteLine(" 채팅 전송 ");
                     Add_chat(msg);
-                    //
+                    Send_add_chat(msg);
                     break;
                 case (byte)MsgId.SEND_FILE:
                     Console.WriteLine(" 파일 전송 ");
@@ -179,17 +179,16 @@ namespace Chatting_Server
         private void Add_chat(Receive_Message msg)
         {
             // 방번호를 탐색 -> 그 방의 ChatRecord에 chat 추가
-            DateTime now = DateTime.Now;
             lock (thisLock)
             {
                 if (chatRecord.ContainsKey(msg.RoomId)) // room_Id가 chatRecord 키로 존재하면 true 반환
                 {
-                    chatRecord[msg.RoomId].Add((msg.UserId, msg.Chat, now));
+                    chatRecord[msg.RoomId].Add((msg.UserId, msg.Chat, msg.Time));
                 }
                 else
                 {
                     List<(string, string, DateTime)> chat = [];
-                    chat.Add((msg.UserId, msg.Chat, now));
+                    chat.Add((msg.UserId, msg.Chat, msg.Time));
                     chatRecord.Add(msg.RoomId, chat);
                 }
             }
@@ -198,19 +197,14 @@ namespace Chatting_Server
         private void Send_add_chat(Receive_Message receive_msg)
         {
             // 채팅방 번호 구성원의 ID로 채팅방 번호와 채팅 내용 add 할 수 있도록 전송
-
-            Send_Message send_msg = new() {MsgId = (byte)MsgId.SEND_CHAT };
+            Send_Message send_msg = new() {
+                MsgId = (byte)MsgId.SEND_CHAT, RoomId = receive_msg.RoomId, 
+                UserId = receive_msg.UserId, Chat = receive_msg.Chat };
             byte[] buf = Serialize_to_json(send_msg);
-            foreach (var memberId in chat_room_list[receive_msg.RoomId])
+            List<NetworkStream> socket = Search_socket(chat_room_list[receive_msg.RoomId]);
+            foreach (var stream in socket)
             {
-                foreach(var userId in connectedUser)
-                {
-                    if (userId.Equals(memberId))
-                    {
-                        userId.Value.Write();
-                        break;
-                    }
-                }
+                stream.Write(buf);
             }
         }
 
@@ -232,12 +226,12 @@ namespace Chatting_Server
             return socket;
         }
 
-        private void Send_chatRecord(byte room_id, List<string> memberList)
+        private void Send_chatRecord(byte roomId, List<string> memberList)
         {
-            Send_Message msg = new() { MsgId = (byte)MsgId.SEND_CHAT };
+            Send_Message msg = new() { MsgId = (byte)MsgId.SEND_CHAT_RECORD, RoomId = roomId  };
             List<NetworkStream> socket = Search_socket(memberList);
             List<(string, string, DateTime)> chat = [];
-            foreach(var ch in chatRecord[room_id])
+            foreach(var ch in chatRecord[roomId])
             {
                 chat.Add((ch.Item1, ch.Item2, ch.Item3));
             }
@@ -272,10 +266,23 @@ namespace Chatting_Server
             }
         }
 
-        private void Exit_chatRoom(byte room_id, string userId)
+        private void Exit_chatRoom(byte roomId, string userId)
         {
-            chat_room_list[room_id].Remove(userId);
-            //Create_chatRoomList_per_user();
+            chat_room_list[roomId].Remove(userId);
+            Send_exit_chatRoom(roomId, userId);
+        }
+
+        private void Send_exit_chatRoom(byte roomId, string userId)
+        {
+            Send_Message msg = new() { MsgId = (byte)MsgId.EXIT, RoomId = roomId, UserId = userId};
+            byte[] buf = Serialize_to_json(msg);
+            List<NetworkStream> socket = Search_socket(chat_room_list[roomId]);
+            foreach (var stream in socket)
+            {
+                stream.Write(buf);
+            }
+
+
         }
 
         private void LogOut(string userId)
@@ -284,18 +291,17 @@ namespace Chatting_Server
             {
                 connectedUser.Remove(userId);
             }
-            Send_remove_user(userId);
+            Send_logOut(userId);
         }
 
-        private void Send_remove_user(string userId)
+        private void Send_logOut(string userId)
         {
-            Send_Message msg = new() { MsgId = (byte)MsgId.REMOVE_USER, UserId = userId };
+            Send_Message msg = new() { MsgId = (byte)MsgId.LOGOUT, UserId = userId };
             byte[] bytes = Serialize_to_json(msg);
             foreach (var user in connectedUser)
             {
                 user.Value.Write(bytes);
             }
         }
-
     }
 }

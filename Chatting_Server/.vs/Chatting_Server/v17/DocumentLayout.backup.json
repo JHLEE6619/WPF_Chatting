@@ -1,22 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\",
+  "WorkspaceRootPath": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\ljh49\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\wpf \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\chatting_server\\model\\chatroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|solutionrelative:model\\chatroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting_server\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|solutionrelative:server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\ljh49\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\wpf \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\chatting_server\\model\\receive_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting_server\\model\\receive_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|solutionrelative:model\\receive_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\ljh49\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\wpf \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\chatting_server\\model\\send_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting_server\\model\\send_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|solutionrelative:model\\send_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\ljh49\\onedrive\\\uBC14\uD0D5 \uD654\uBA74\\wpf \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\chatting_server\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|solutionrelative:server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting_server\\model\\chatroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{141EA881-F11F-4928-9A95-8C873704F926}|Chatting_Server.csproj|solutionrelative:model\\chatroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,56 +26,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 210,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ChatRoom.cs",
-              "DocumentMoniker": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Model\\ChatRoom.cs",
-              "RelativeDocumentMoniker": "Model\\ChatRoom.cs",
-              "ToolTip": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Model\\ChatRoom.cs",
-              "RelativeToolTip": "Model\\ChatRoom.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T21:44:58.784Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Receive_Message.cs",
-              "DocumentMoniker": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Model\\Receive_Message.cs",
+              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Model\\Receive_Message.cs",
               "RelativeDocumentMoniker": "Model\\Receive_Message.cs",
-              "ToolTip": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Model\\Receive_Message.cs",
+              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Model\\Receive_Message.cs",
               "RelativeToolTip": "Model\\Receive_Message.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T06:12:08.567Z",
+              "WhenOpened": "2025-03-04T01:16:38.966Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Send_Message.cs",
-              "DocumentMoniker": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Model\\Send_Message.cs",
+              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Model\\Send_Message.cs",
               "RelativeDocumentMoniker": "Model\\Send_Message.cs",
-              "ToolTip": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Model\\Send_Message.cs",
+              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Model\\Send_Message.cs",
               "RelativeToolTip": "Model\\Send_Message.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T06:00:24.517Z",
+              "WhenOpened": "2025-03-04T01:16:37.809Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ChatRoom.cs",
+              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Model\\ChatRoom.cs",
+              "RelativeDocumentMoniker": "Model\\ChatRoom.cs",
+              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Model\\ChatRoom.cs",
+              "RelativeToolTip": "Model\\ChatRoom.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-28T21:44:58.784Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Server.cs",
-              "DocumentMoniker": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Server.cs",
+              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Server.cs",
               "RelativeDocumentMoniker": "Server.cs",
-              "ToolTip": "C:\\Users\\ljh49\\OneDrive\\\uBC14\uD0D5 \uD654\uBA74\\WPF \uCC44\uD305\uD504\uB85C\uADF8\uB7A8\\Chatting_Server\\Server.cs",
+              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting_Server\\Server.cs",
               "RelativeToolTip": "Server.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAcwPIAAABKAAAAAAAAAA==",
+              "ViewState": "AgIAABoBAAAAAAAAAADwvygBAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-28T05:50:35.6Z",
               "EditorCaption": ""

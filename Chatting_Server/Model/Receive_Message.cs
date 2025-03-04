@@ -13,5 +13,6 @@ namespace Chatting_Server.Model
         public string UserId { get; set; }
         public List<string> MemberId { get; set; } = [];
         public string Chat { get; set; }
+        public DateTime Time { get; set; }
     }
 }

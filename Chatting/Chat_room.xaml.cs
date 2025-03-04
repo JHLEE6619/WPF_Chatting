@@ -44,7 +44,8 @@ namespace Chatting
 
         private Send_Message Send_chat(string chat)
         {
-            Send_Message msg = new() { MsgId = (byte)Client.MsgId.SEND_CHAT, UserId = Global_Data.UserId, RoomId = roomId, Chat = chat };
+            DateTime time = DateTime.Now;
+            Send_Message msg = new() { MsgId = (byte)Client.MsgId.SEND_CHAT, UserId = Global_Data.UserId, RoomId = roomId, Chat = chat, Time = time };
             return msg;
         }
 
