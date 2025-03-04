@@ -32,6 +32,7 @@ namespace Chatting_Server
         public async Task StartServer()
         {
             TcpListener listener = new TcpListener(IPAddress.Any, 10000);
+            Console.WriteLine(" 서버 시작 ");
             listener.Start();
             while (true)
             {
@@ -45,6 +46,7 @@ namespace Chatting_Server
         // 클라이언트 별로 다른 스레드가 실행하는 메소드
         private async Task ServerMain(Object client)
         {
+            Console.WriteLine(" 클라이언트 연결됨 ");
             byte[] buf = new byte[5000];
             TcpClient tc = (TcpClient)client;
             NetworkStream stream = tc.GetStream();
@@ -64,6 +66,7 @@ namespace Chatting_Server
             { }
             finally
             {
+                Console.WriteLine(" 클라이언트 연결 종료 ");
                 stream.Close();
                 tc.Close();
             }
@@ -75,10 +78,12 @@ namespace Chatting_Server
             switch (msg.MsgId)
             {
                 case (byte)MsgId.LOGIN: // 할당
+                    Console.WriteLine(" 로그인 ");
                     Add_user(msg.UserId, stream);
                     Send_userList(stream);
                     break;
                 case (byte)MsgId.CREATE_ROOM:
+                    Console.WriteLine(" 방 생성 ");
                     Create_chatRoom(msg.MemberId);
                     Send_add_chatRoom(msg.MemberId);
                     lock (thisLock)
@@ -88,20 +93,25 @@ namespace Chatting_Server
                     //Create_chatRoomList_per_user();
                     break;
                 case (byte)MsgId.SEND_CHAT:
+                    Console.WriteLine(" 채팅 전송 ");
                     Add_chat(msg);
                     //
                     break;
                 case (byte)MsgId.SEND_FILE:
+                    Console.WriteLine(" 파일 전송 ");
                     break;
-                case (byte)MsgId.INVITE: 
+                case (byte)MsgId.INVITE:
+                    Console.WriteLine(" 초대 ");
                     Add_member_to_chatRoom(msg.RoomId, msg.MemberId);
                     Send_add_invited_chatRoom(msg.RoomId);
                     Send_chatRecord(msg.RoomId, msg.MemberId);
                     break;
                 case (byte)MsgId.EXIT:
+                    Console.WriteLine(" 퇴장 ");
                     Exit_chatRoom(msg.RoomId, msg.UserId);
                     break;
                 case (byte)MsgId.LOGOUT:
+                    Console.WriteLine(" 로그아웃 ");
                     LogOut(msg.UserId);
                     break;
             }
@@ -185,9 +195,23 @@ namespace Chatting_Server
             }
         }
 
-        private void Send_add_chat(Receive_Message msg)
+        private void Send_add_chat(Receive_Message receive_msg)
         {
+            // 채팅방 번호 구성원의 ID로 채팅방 번호와 채팅 내용 add 할 수 있도록 전송
 
+            Send_Message send_msg = new() {MsgId = (byte)MsgId.SEND_CHAT };
+            byte[] buf = Serialize_to_json(send_msg);
+            foreach (var memberId in chat_room_list[receive_msg.RoomId])
+            {
+                foreach(var userId in connectedUser)
+                {
+                    if (userId.Equals(memberId))
+                    {
+                        userId.Value.Write();
+                        break;
+                    }
+                }
+            }
         }
 
         private List<NetworkStream> Search_socket(List<string> userList)

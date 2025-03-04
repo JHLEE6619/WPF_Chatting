@@ -9,7 +9,6 @@ namespace Chatting_Server.Model
     public class ChatRoom
     {
         public byte RoomId { get; set; }
-        public string MemberId { get; set;
-        }
+        public string MemberId { get; set; }
     }
 }
