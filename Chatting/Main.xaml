@@ -23,5 +23,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <TextBlock x:Name="Tblock_userId" HorizontalAlignment="Left" Margin="280,35,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="160" FontSize="16"/>
     </Grid>
 </Page>

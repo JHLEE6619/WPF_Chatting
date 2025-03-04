@@ -16,8 +16,6 @@ namespace Chatting
     {
         static TcpClient tc = new TcpClient("127.0.0.1", 10000);
         static NetworkStream stream = tc.GetStream();
-        Main main = new();
-
         private readonly object thisLock = new();
 
         public enum MsgId : byte
@@ -104,7 +102,10 @@ namespace Chatting
             //this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
             //{
             //}));
-            Global_Data.UserList.Add(user);
+            lock (thisLock)
+            {
+                Global_Data.UserList.Add(user);
+            }
 
 
         }

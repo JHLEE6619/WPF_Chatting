@@ -68,7 +68,6 @@ namespace Chatting_Server
             { }
             finally
             {
-                Console.WriteLine(" 클라이언트 연결 종료 ");
                 Disconnect_client(stream);
                 stream.Close();
                 tc.Close();
@@ -81,6 +80,7 @@ namespace Chatting_Server
             {
                 if(user.Value == stream)
                 {
+                    Console.WriteLine($"{user.Key} 연결 종료 ");
                     connectedUser.Remove(user.Key);
                     break;
                 }
@@ -93,9 +93,11 @@ namespace Chatting_Server
             switch (msg.MsgId)
             {
                 case (byte)MsgId.LOGIN: // 할당
-                    Console.WriteLine(" 로그인 ");
-                    Add_user(msg.UserId, stream);
+                    Console.WriteLine(" 로그인 1 ");
                     Send_userList(stream);
+                    Console.WriteLine(" 로그인 2 ");
+                    Add_user(msg.UserId, stream);
+                    Console.WriteLine(" 로그인 3 ");
                     break;
                 case (byte)MsgId.CREATE_ROOM:
                     Console.WriteLine(" 방 생성 ");
@@ -105,7 +107,6 @@ namespace Chatting_Server
                     {
                         roomId++;
                     }
-                    //Create_chatRoomList_per_user();
                     break;
                 case (byte)MsgId.SEND_CHAT:
                     Console.WriteLine(" 채팅 전송 ");
@@ -139,34 +140,44 @@ namespace Chatting_Server
             return buf;
         }
 
+        private void Send_userList(NetworkStream stream)
+        {
+            Send_Message msg = new() { MsgId = (byte)MsgId.LOGIN};
+            foreach (var userId in connectedUser)
+            {
+                msg.ConnectedUser.Add(userId.Key);
+            }
+
+            byte[] bytes = Serialize_to_json(msg);
+            // 디버그용 출력문
+
+            // 로그인한 유저 소켓으로 접속유저 리스트 전송
+            stream.WriteAsync(bytes).ConfigureAwait(false); // await?  
+        }
+
         private void Add_user(string userId, NetworkStream stream)
         {
             lock (thisLock)
             {
                 connectedUser.Add(userId, stream);
+                foreach(var user in connectedUser)
+                {
+                    Console.WriteLine($"{user.Key}");
+                }
             }
-            Send_add_user(userId, stream);
+
+            Send_add_user(userId);
         }
 
-        private void Send_add_user(string userId, NetworkStream stream)
+        private void Send_add_user(string userId)
         {
             Send_Message msg = new() { MsgId = (byte)MsgId.ADD_USER, UserId = userId};
             byte[] bytes = Serialize_to_json(msg);
-            stream.WriteAsync(bytes).ConfigureAwait(false);
-
-        }
-
-        private void Send_userList(NetworkStream stream)
-        {
-            Send_Message msg = new() { MsgId = (byte)MsgId.LOGIN };
-            foreach (var userId in connectedUser)
+            foreach (var user in connectedUser)
             {
-                msg.ConnectedUser.Add(userId.Key);
+                user.Value.WriteAsync(bytes).ConfigureAwait(false);
             }
-            byte[] bytes = Serialize_to_json(msg);
 
-            // 로그인한 유저 소켓으로 접속유저 리스트 전송
-            stream.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false); // await?  
         }
 
         private void Create_chatRoom(List<string> memberId)

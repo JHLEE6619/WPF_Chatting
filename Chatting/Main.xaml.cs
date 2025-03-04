@@ -28,6 +28,7 @@ namespace Chatting
             InitializeComponent();
             clnt.ConnectServer();
             clnt.Send_msg(Login(Global_Data.UserId));
+            Tblock_userId.Text = Global_Data.UserId;
             LV_user_list.ItemsSource = Global_Data.UserList;
         }
 
