@@ -131,7 +131,7 @@ namespace Chatting
             // dispatcher
             if (chat_room_list != null)
             {
-                chat_room.Dispatcher.BeginInvoke(() =>
+                chat_room_list.Dispatcher.BeginInvoke(() =>
                 {
                     lock (thisLock)
                     {

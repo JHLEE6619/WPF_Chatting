@@ -88,7 +88,7 @@ namespace Chatting_Server
         private void Handler(Receive_Message msg, NetworkStream stream)
         {
 
-            switch (msg.MsgId)
+            switch (msg.MsgId)  
             {
                 case (byte)MsgId.LOGIN: // 할당
                     Send_userListAsync(stream);

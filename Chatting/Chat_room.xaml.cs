@@ -41,11 +41,12 @@ namespace Chatting
         private void btn_send_chat_Click(object sender, RoutedEventArgs e)
         {
             clnt.Send_msg(Send_chat(Tbox_chat.Text));
+            Tbox_chat.Text = "";
         }
 
         private Send_Message Send_chat(string chat)
         {
-                DateTime time = DateTime.Now;
+            DateTime time = DateTime.Now;
 
             Send_Message msg = new() { MsgId = (byte)Client.MsgId.SEND_CHAT, UserId = Global_Data.UserId, RoomId = roomId, Chat = chat, Time = time };
             return msg;

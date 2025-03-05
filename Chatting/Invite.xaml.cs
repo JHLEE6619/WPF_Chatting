@@ -25,6 +25,8 @@ namespace Chatting
     {
         private ObservableCollection<User> userList = [];
         private Client clnt;
+        private byte roomId;
+
         public Invite()
         {
             InitializeComponent();
@@ -33,6 +35,7 @@ namespace Chatting
         {
             InitializeComponent();
             this.clnt = clnt;
+            this.roomId = roomId;
             userList = Create_userList(roomId);
             LV_user_list.ItemsSource = userList;
              
@@ -51,13 +54,19 @@ namespace Chatting
                 }
             }
 
+            List<User> removeList = [];
             foreach (var user in userList)
             {
                 foreach(var member in memberList)
                 {
-                    if (member.Equals(user))
-                        userList.Remove(user);
+                    if (member.Equals(user.UserId))
+                        removeList.Add(user);
                 }
+            }
+
+            foreach(var removeUser in removeList)
+            {
+                userList.Remove(removeUser);
             }
 
             return userList;
@@ -66,21 +75,28 @@ namespace Chatting
         private void btn_invite_Click(object sender, RoutedEventArgs e)
         {
             List<string> memberId = [];
-            foreach(var user in userList)
+            List<User> removeList = [];
+            foreach (var user in userList)
             {
                 if (user.IsChecked)
                 {
                     memberId.Add(user.UserId);
-                    userList.Remove(user);
+                    removeList.Add(user);
                 }
             }
+
+            foreach (var removeUser in removeList)
+            {
+                userList.Remove(removeUser);
+            }
+
             clnt.Send_msg(Invite_member(memberId));
             MessageBox.Show("초대가 완료되었습니다.", "초대 완료");
         }
 
         private Send_Message Invite_member(List<string> memberId)
         {
-            Send_Message msg = new() { MsgId = (byte)Client.MsgId.INVITE, MemberId = memberId };
+            Send_Message msg = new() { MsgId = (byte)Client.MsgId.INVITE, MemberId = memberId, RoomId = roomId};
             return msg;
         }
 
