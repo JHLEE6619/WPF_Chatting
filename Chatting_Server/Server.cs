@@ -104,7 +104,7 @@ namespace Chatting_Server
                 case (byte)MsgId.CREATE_ROOM:
                     Console.WriteLine(" 방 생성 ");
                     Create_chatRoom(msg.MemberId);
-                    Send_add_chatRoom(msg.MemberId);
+                    Send_add_chatRoomAsync(msg.MemberId);
                     lock (thisLock)
                     {
                         roomId++;
@@ -113,7 +113,7 @@ namespace Chatting_Server
                 case (byte)MsgId.SEND_CHAT:
                     Console.WriteLine(" 채팅 전송 ");
                     Add_chat(msg);
-                    Send_add_chat(msg);
+                    Send_add_chatAsync(msg);
                     break;
                 case (byte)MsgId.SEND_FILE:
                     Console.WriteLine(" 파일 전송 ");
@@ -190,7 +190,7 @@ namespace Chatting_Server
             }
         }
 
-        private void Send_add_chatRoom(List<string> memberId)
+        private async Task Send_add_chatRoomAsync(List<string> memberId)
         {
             string memberList = String.Join(", ", memberId.ToArray());
             List<NetworkStream> socket = Search_socket(memberId);
@@ -198,7 +198,7 @@ namespace Chatting_Server
             byte[] buf = Serialize_to_json(msg);
             foreach(var stream in socket)
             {
-                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
+                await stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
         }
 
@@ -220,7 +220,7 @@ namespace Chatting_Server
             }
         }
 
-        private void Send_add_chat(Receive_Message receive_msg)
+        private async Task Send_add_chatAsync(Receive_Message receive_msg)
         {
             // 채팅방 번호 구성원의 ID로 채팅방 번호와 채팅 내용 add 할 수 있도록 전송
             Send_Message send_msg = new() {
@@ -230,7 +230,7 @@ namespace Chatting_Server
             List<NetworkStream> socket = Search_socket(chat_room_list[receive_msg.RoomId]);
             foreach (var stream in socket)
             {
-                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
+                await stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
         }
 
@@ -250,7 +250,7 @@ namespace Chatting_Server
             List<string> memberId = chat_room_list[roomId]; // 채팅방의 모든 구성원으로 정보 전송
             string memberList = String.Join(", ", memberId.ToArray());
             List<NetworkStream> socket = Search_socket(memberId);
-            Send_Message msg = new() { MsgId = (byte)MsgId.INVITE, RoomId = roomId, UserId = memberList }; // -> 클라이언트 Dictionary 키에러 가능성
+            Send_Message msg = new() { MsgId = (byte)MsgId.INVITE, RoomId = roomId, UserId = memberList };
             byte[] buf = Serialize_to_json(msg);
             foreach (var stream in socket)
             {
@@ -280,17 +280,17 @@ namespace Chatting_Server
         private void Exit_chatRoom(byte roomId, string userId)
         {
             chat_room_list[roomId].Remove(userId);
-            Send_exit_chatRoom(roomId, userId);
+            Send_exit_chatRoomAsync(roomId, userId);
         }
 
-        private void Send_exit_chatRoom(byte roomId, string userId)
+        private async Task Send_exit_chatRoomAsync(byte roomId, string userId)
         {
             Send_Message msg = new() { MsgId = (byte)MsgId.EXIT, RoomId = roomId, UserId = userId};
             byte[] buf = Serialize_to_json(msg);
             List<NetworkStream> socket = Search_socket(chat_room_list[roomId]);
             foreach (var stream in socket)
             {
-                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
+                await stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
 
 
@@ -302,16 +302,16 @@ namespace Chatting_Server
             {
                 connectedUser.Remove(userId);
             }
-            Send_logOut(userId);
+            Send_logOutAsync(userId);
         }
 
-        private void Send_logOut(string userId)
+        private async Task Send_logOutAsync(string userId)
         {
             Send_Message msg = new() { MsgId = (byte)MsgId.LOGOUT, UserId = userId };
             byte[] bytes = Serialize_to_json(msg);
             foreach (var user in connectedUser)
             {
-                user.Value.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
+                await user.Value.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
             }
         }
 

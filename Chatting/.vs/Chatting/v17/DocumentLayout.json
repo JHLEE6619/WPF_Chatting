@@ -7,36 +7,12 @@
       "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\model\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:model\\chat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\model\\receive_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:model\\receive_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\model\\global_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:model\\global_data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\model\\send_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:model\\send_message.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\chat_room.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:chat_room.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\invite.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:invite.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\main.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:main.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:model\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|c:\\users\\lms\\desktop\\wpf_chatting\\chatting\\chat_room_list.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D4A9AB5-520D-4CA2-ABD5-2AF30FEFB85C}|Chatting.csproj|solutionrelative:chat_room_list.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,110 +22,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Chat.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Chat.cs",
-              "RelativeDocumentMoniker": "Model\\Chat.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Chat.cs",
-              "RelativeToolTip": "Model\\Chat.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T06:38:03.857Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Receive_Message.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Receive_Message.cs",
-              "RelativeDocumentMoniker": "Model\\Receive_Message.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Receive_Message.cs",
-              "RelativeToolTip": "Model\\Receive_Message.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAEwBIAAAAuAAAAAAAAAA==",
+              "Title": "Chat_room_list.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chat_room_list.xaml.cs",
+              "RelativeDocumentMoniker": "Chat_room_list.xaml.cs",
+              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chat_room_list.xaml.cs",
+              "RelativeToolTip": "Chat_room_list.xaml.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAB8AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T06:33:58.531Z",
+              "WhenOpened": "2025-03-05T07:32:49.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Send_Message.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Send_Message.cs",
-              "RelativeDocumentMoniker": "Model\\Send_Message.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Send_Message.cs",
-              "RelativeToolTip": "Model\\Send_Message.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T06:33:48.19Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "Chat_room.xaml.cs",
               "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chat_room.xaml.cs",
               "RelativeDocumentMoniker": "Chat_room.xaml.cs",
               "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chat_room.xaml.cs",
               "RelativeToolTip": "Chat_room.xaml.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAACsAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T06:30:34.615Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Global_Data.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Global_Data.cs",
-              "RelativeDocumentMoniker": "Model\\Global_Data.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\Global_Data.cs",
-              "RelativeToolTip": "Model\\Global_Data.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T05:42:15.38Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\User.cs",
-              "RelativeDocumentMoniker": "Model\\User.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Model\\User.cs",
-              "RelativeToolTip": "Model\\User.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T06:09:23.093Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Invite.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Invite.xaml.cs",
-              "RelativeDocumentMoniker": "Invite.xaml.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Invite.xaml.cs",
-              "RelativeToolTip": "Invite.xaml.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAADUAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T05:43:46.885Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Main.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Main.xaml.cs",
-              "RelativeDocumentMoniker": "Main.xaml.cs",
-              "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Main.xaml.cs",
-              "RelativeToolTip": "Main.xaml.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAAEkAAABlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T01:58:18.966Z",
+              "WhenOpened": "2025-03-05T07:32:30.981Z",
               "EditorCaption": ""
             },
             {
@@ -160,7 +58,7 @@
               "RelativeDocumentMoniker": "Client.cs",
               "ToolTip": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Client.cs",
               "RelativeToolTip": "Client.cs",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAEwMMAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAMUAAAAAAAAAAAAswNEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T01:43:56.086Z",
               "EditorCaption": ""

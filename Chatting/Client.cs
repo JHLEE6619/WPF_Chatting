@@ -66,38 +66,37 @@ namespace Chatting
 
         private async Task Handler(Receive_Message msg)
         {
-            lock (thisLock)
+            
+            switch (msg.MsgId)
             {
-                switch (msg.MsgId)
-                {
-                    case (byte)MsgId.LOGIN: // 할당
-                        Receive_userList(msg.ConnectedUser);
-                        break;
-                    case (byte)MsgId.ADD_USER: // Add
-                        Add_user(msg.UserId);
-                        break;
-                    case (byte)MsgId.CREATE_ROOM: // Add
-                        Create_room(msg.RoomId, msg.UserId);
-                        break;
-                    case (byte)MsgId.SEND_CHAT: // Add
-                        Add_chat(msg);
-                        break;
-                    case (byte)MsgId.SEND_FILE:
-                        break;
-                    case (byte)MsgId.INVITE: // 구성원 정보 수신 -> 기존 방을 제거하고 추가
-                        Add_members(msg.RoomId, msg.UserId);
-                        break;
-                    case (byte)MsgId.SEND_CHAT_RECORD:
-                        Receive_chatRecord(msg.RoomId, msg.ChatRecord);
-                        break;
-                    case (byte)MsgId.EXIT: // Remove
-                        Receive_exit_room(msg.RoomId, msg.UserId);
-                        break;
-                    case (byte)MsgId.LOGOUT:
-                        Receive_logout(msg.UserId);
-                        break;
-                }
+                case (byte)MsgId.LOGIN: // 할당
+                    Receive_userList(msg.ConnectedUser);
+                    break;
+                case (byte)MsgId.ADD_USER: // Add
+                    Add_user(msg.UserId);
+                    break;
+                case (byte)MsgId.CREATE_ROOM: // Add
+                    Create_room(msg.RoomId, msg.UserId);
+                    break;
+                case (byte)MsgId.SEND_CHAT: // Add
+                    Add_chat(msg);
+                    break;
+                case (byte)MsgId.SEND_FILE:
+                    break;
+                case (byte)MsgId.INVITE: // 구성원 정보 수신 -> 기존 방을 제거하고 추가
+                    Add_members(msg.RoomId, msg.UserId);
+                    break;
+                case (byte)MsgId.SEND_CHAT_RECORD:
+                    Receive_chatRecord(msg.RoomId, msg.ChatRecord);
+                    break;
+                case (byte)MsgId.EXIT: // Remove
+                    Receive_exit_room(msg.RoomId, msg.UserId);
+                    break;
+                case (byte)MsgId.LOGOUT:
+                    Receive_logout(msg.UserId);
+                    break;
             }
+            
         }
 
 
@@ -128,7 +127,6 @@ namespace Chatting
         {
             ChatRoom chatRoom = new() { RoomId = roomId, MemberId = memberId };
             ObservableCollection<Chat> chat = [];
-            // dispatcher
             if (chat_room_list != null)
             {
                 chat_room_list.Dispatcher.BeginInvoke(() =>
@@ -210,35 +208,80 @@ namespace Chatting
 
         private void Add_members(byte roomId, string memberId)
         {
-            // 기존 방이 있으면 제거
-            foreach(var room in Global_Data.ChatRoomList)
+            int idx = Search_Room(roomId);
+            // 방이 없는 초대받은 유저는 방 추가
+            if (idx == -1)
             {
-                if (room.RoomId == roomId)
+                Create_room(roomId, memberId);
+            }
+            else // 기존 구성원은 멤버 수정
+            {
+                if (chat_room_list != null)
                 {
-                    if(chat_room_list != null)
-                    {
-                        chat_room_list.Dispatcher.BeginInvoke(() =>
-                        {
-                            lock (thisLock)
-                            {
-                                Global_Data.ChatRoomList.Remove(room);
-                            }
-                        });
-                    }
-                    else
+                    chat_room_list.Dispatcher.BeginInvoke(() =>
                     {
                         lock (thisLock)
                         {
-                            Global_Data.ChatRoomList.Remove(room);
+                            Global_Data.ChatRoomList[Search_Room(roomId)].MemberId = memberId;
                         }
+                    });
+                }
+                else
+                {
+                    lock (thisLock)
+                    {
+                        Global_Data.ChatRoomList[Search_Room(roomId)].MemberId = memberId;
                     }
+                }
+            }
+        }
+
+        private int Search_Room(byte roomId)
+        {
+            int idx = -1;
+            foreach(var room in Global_Data.ChatRoomList)
+            {
+                if(room.RoomId == roomId)
+                {
+                    idx = Global_Data.ChatRoomList.IndexOf(room);
                     break;
                 }
             }
-
-            // 다시 방 추가
-            Create_room(roomId, memberId);
+            return idx;
         }
+
+
+        //private void Add_members(byte roomId, string memberId)
+        //{
+        //    // 기존 방이 있으면 제거
+        //    foreach(var room in Global_Data.ChatRoomList)
+        //    {
+        //        if (room.RoomId == roomId)
+        //        {
+        //            if(chat_room_list != null)
+        //            {
+        //                chat_room_list.Dispatcher.BeginInvoke(() =>
+        //                {
+        //                    lock (thisLock)
+        //                    {
+        //                        Global_Data.ChatRoomList.Remove(room);
+        //                    }
+        //                });
+        //            }
+        //            else
+        //            {
+        //                lock (thisLock)
+        //                {
+        //                    Global_Data.ChatRoomList.Remove(room);
+        //                }
+        //            }
+        //            break;
+        //        }
+        //    }
+
+        //    // 다시 방 추가
+        //    Create_room(roomId, memberId);
+        //}
 
         private void Receive_chatRecord(byte roomId, List<(string, string, string)> chatRecord)
         {
