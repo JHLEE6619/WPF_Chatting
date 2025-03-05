@@ -110,17 +110,18 @@ namespace Chatting
 
         private void Add_user(string userId)
         {
-            User user = new() { UserId = userId };
-
-            main.Dispatcher.BeginInvoke(() =>
+            if (!userId.Equals(Global_Data.UserId))
             {
-                lock (thisLock)
+                User user = new() { UserId = userId };
+
+                main.Dispatcher.BeginInvoke(() =>
                 {
-                    Global_Data.UserList.Add(user);
-                }
-            });
-
-
+                    lock (thisLock)
+                    {
+                        Global_Data.UserList.Add(user);
+                    }
+                });
+            }
         }
 
         private void Create_room(byte roomId, string memberId)
@@ -207,7 +208,7 @@ namespace Chatting
         }
 
         private void Add_members(byte roomId, string memberId)
-        { 
+        {
             int idx = Search_Room(roomId);
             // 방이 없는 초대받은 유저는 방 추가
             if (idx == -1)
@@ -256,11 +257,11 @@ namespace Chatting
         //private void Add_members(byte roomId, string memberId)
         //{
         //    // 기존 방이 있으면 제거
-        //    foreach(var room in Global_Data.ChatRoomList)
+        //    foreach (var room in Global_Data.ChatRoomList)
         //    {
         //        if (room.RoomId == roomId)
         //        {
-        //            if(chat_room_list != null)
+        //            if (chat_room_list != null)
         //            {
         //                chat_room_list.Dispatcher.BeginInvoke(() =>
         //                {
@@ -280,7 +281,6 @@ namespace Chatting
         //            break;
         //        }
         //    }
-
         //    // 다시 방 추가
         //    Create_room(roomId, memberId);
         //}

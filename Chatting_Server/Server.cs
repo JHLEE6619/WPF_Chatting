@@ -97,9 +97,7 @@ namespace Chatting_Server
             {
                 case (byte)MsgId.LOGIN: // 할당
                     Send_userListAsync(stream);
-                    Console.WriteLine(" send_userList");
                     Add_user(msg.UserId, stream);
-                    Console.WriteLine(" add_user");
                     break;
                 case (byte)MsgId.CREATE_ROOM:
                     Console.WriteLine(" 방 생성 ");

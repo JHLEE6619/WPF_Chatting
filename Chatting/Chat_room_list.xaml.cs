@@ -31,7 +31,8 @@ namespace Chatting
             this.clnt = clnt;
             this.clnt.chat_room_list = this;
             LV_chat_room_list.ItemsSource = Global_Data.ChatRoomList;
-            
+            Tblock_userId.Text = $"{Global_Data.UserId}님 환영합니다.";
+
         }
 
         private void Chat_room_click(object sender, SelectionChangedEventArgs e)

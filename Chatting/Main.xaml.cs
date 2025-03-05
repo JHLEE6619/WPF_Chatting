@@ -30,14 +30,6 @@ namespace Chatting
             clnt = new(this);
             clnt.ConnectServer();
             clnt.Send_msgAsync(Login(Global_Data.UserId));
-            //User user = new() { UserId = Global_Data.UserId };
-            //this.Dispatcher.BeginInvoke(() =>
-            //{
-            //    lock (thisLock)
-            //    {
-            //        Global_Data.UserList.Remove(user); // 자기 아이디는 유저리스트에서 안뜨게
-            //    }
-            //});
             Tblock_userId.Text = $"{Global_Data.UserId}님 환영합니다.";
             LV_user_list.ItemsSource = Global_Data.UserList;
         }

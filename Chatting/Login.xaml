@@ -8,10 +8,10 @@
       d:DesignHeight="600" d:DesignWidth="450"
       Title="Login">
 
-    <Grid Background="White">
-        <TextBlock HorizontalAlignment="Center" Margin="0,160,0,0" 
-                   TextWrapping="Wrap" Text="카카오톡" VerticalAlignment="Top" 
-                   FontSize="44" FontWeight="Bold"/>
+    <Grid Background="#FFFEF01B">
+        <TextBlock HorizontalAlignment="Center" Margin="0,160,0,0"
+                   TextWrapping="Wrap" VerticalAlignment="Top" 
+                   FontSize="44" FontWeight="Bold" Background="#FF3A1D1D" TextAlignment="Center" Foreground="Yellow"><Run Language="ko-kr" Text="카"/><Run Text="톡"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="94,0,0,0" TextWrapping="Wrap" Text="아이디" VerticalAlignment="Center" FontSize="16"/>
         <TextBox x:Name="TBox_id" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="145" FontSize="16" Margin="180,0,0,0"/>
         <TextBlock HorizontalAlignment="Left" Margin="94,333,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="비밀번호"/>

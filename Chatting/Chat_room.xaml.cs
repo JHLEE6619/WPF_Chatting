@@ -62,7 +62,12 @@ namespace Chatting
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
             clnt.Send_msgAsync(Exit(roomId));
+            this.Dispatcher.BeginInvoke(() =>
+            {
+                Global_Data.ChatRecord.Remove(roomId);
+            });
             this.Close();
+
         }
 
         private Send_Message Exit(byte roomId)

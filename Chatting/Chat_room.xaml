@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:Chatting"
         mc:Ignorable="d"
         Title="Chat_room" Height="600" Width="450">
-    <Grid>
+    <Grid Background="#FFFEF01B">
         <TextBlock HorizontalAlignment="Left" Margin="30,30,0,0" TextWrapping="Wrap"
             Text="대화방" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <ListView x:Name="LV_chat_record" Margin="0,140,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="330">
+        <ListView x:Name="LV_chat_record" Margin="0,140,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="330" Background="#FF9BBBD4">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="10" Orientation="Horizontal">
-                        <TextBlock Margin="10" Text="{Binding UserId}" FontSize="16" FontWeight="Bold"/>
-                        <TextBlock Margin="50" Text="{Binding Content}" FontSize="12"/>
+                    <StackPanel Margin="10" Orientation="Horizontal" Background="White">
+                        <TextBlock Text="{Binding UserId}" FontSize="16" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Content}" FontSize="12"/>
                         <TextBlock Text="{Binding Time}" FontSize="12"/>
                     </StackPanel>
                 </DataTemplate>
@@ -23,7 +23,7 @@
         <Button Content="파일 전송" FontSize="16" HorizontalAlignment="Left" Margin="40,100,0,0" VerticalAlignment="Top" Width="100"/>
         <Button x:Name="btn_invite" Content="초대하기" FontSize="16" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Width="100" Click="btn_invite_Click"/>
         <Button x:Name="btn_exit" Content="퇴장" FontSize="16" HorizontalAlignment="Left" Margin="310,100,0,0" VerticalAlignment="Top" Width="100" Click="btn_exit_Click"/>
-        <TextBox x:Name="Tbox_chat" FontSize="16" HorizontalAlignment="Left" Margin="40,500,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBox x:Name="Tbox_chat" FontSize="16" HorizontalAlignment="Left" Margin="40,500,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Background="White"/>
         <Button x:Name="btn_send_chat" Content="전송" FontSize="16" HorizontalAlignment="Left" Margin="360,499,0,0" VerticalAlignment="Top" Width="50" Click="btn_send_chat_Click"/>
     </Grid>
 </Window>
