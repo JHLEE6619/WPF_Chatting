@@ -40,7 +40,7 @@ namespace Chatting
 
         private void btn_send_chat_Click(object sender, RoutedEventArgs e)
         {
-            clnt.Send_msg(Send_chat(Tbox_chat.Text));
+            clnt.Send_msgAsync(Send_chat(Tbox_chat.Text));
             Tbox_chat.Text = "";
         }
 
@@ -60,7 +60,7 @@ namespace Chatting
 
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
-            clnt.Send_msg(Exit(roomId));
+            clnt.Send_msgAsync(Exit(roomId));
             this.Close();
         }
 

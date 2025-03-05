@@ -83,11 +83,13 @@ namespace Chatting
                         System.Diagnostics.Debug.WriteLine("방 생성");
                         break;
                     case (byte)MsgId.SEND_CHAT: // Add
+                        System.Diagnostics.Debug.WriteLine("채팅 전송");
                         Add_chat(msg);
                         break;
                     case (byte)MsgId.SEND_FILE:
                         break;
                     case (byte)MsgId.INVITE:
+                        System.Diagnostics.Debug.WriteLine("초대");
                         Receive_chatRecord(msg.RoomId, msg.ChatRecord);
                         break;
                     case (byte)MsgId.EXIT: // Remove
@@ -261,10 +263,10 @@ namespace Chatting
             return sendMsg;
         }
 
-        public void Send_msg(Send_Message msg)
+        public async Task Send_msgAsync(Send_Message msg)
         {
             byte[] sendMsg = SerializeToJson(msg);
-            stream.WriteAsync(sendMsg).ConfigureAwait(false);
+            await stream.WriteAsync(sendMsg, 0, sendMsg.Length).ConfigureAwait(false);
         }
     }
 }

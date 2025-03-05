@@ -90,13 +90,15 @@ namespace Chatting
                 userList.Remove(removeUser);
             }
 
-            clnt.Send_msg(Invite_member(memberId));
-            MessageBox.Show("초대가 완료되었습니다.", "초대 완료");
+            clnt.Send_msgAsync(Invite_member(memberId));
+
+            //MessageBox.Show("초대가 완료되었습니다.", "초대 완료");
+            //this.Close();
         }
 
         private Send_Message Invite_member(List<string> memberId)
         {
-            Send_Message msg = new() { MsgId = (byte)Client.MsgId.INVITE, MemberId = memberId, RoomId = roomId};
+            Send_Message msg = new() { MsgId = (byte)Client.MsgId.INVITE, MemberId = memberId, RoomId = roomId };
             return msg;
         }
 

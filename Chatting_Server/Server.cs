@@ -59,6 +59,11 @@ namespace Chatting_Server
                     int len = await stream.ReadAsync(buf, 0, buf.Length).ConfigureAwait(false);
                     string json = Encoding.UTF8.GetString(buf, 0, len);
                     msg = JsonConvert.DeserializeObject<Receive_Message>(json);
+                    if(msg == null)
+                    {
+                        Console.WriteLine("메세지가 null 입니다.");
+                        continue;
+                    }
                     Handler(msg, stream);
                 }
             }
@@ -79,7 +84,7 @@ namespace Chatting_Server
                 if(user.Value == stream)
                 {
                     Console.WriteLine($"{user.Key} 연결 종료 ");
-                    connectedUser.Remove(user.Key);
+                    LogOut(user.Key);
                     break;
                 }
             }
@@ -149,7 +154,7 @@ namespace Chatting_Server
             // 디버그용 출력문
 
             // 로그인한 유저 소켓으로 접속유저 리스트 전송
-            await stream.WriteAsync(bytes).ConfigureAwait(false); // await?  
+            await stream.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false); // await?  
         }
 
         private void Add_user(string userId, NetworkStream stream)
@@ -172,7 +177,7 @@ namespace Chatting_Server
             byte[] bytes = Serialize_to_json(msg);
             foreach (var user in connectedUser)
             {
-                await user.Value.WriteAsync(bytes).ConfigureAwait(false);
+                await user.Value.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
             }
 
         }
@@ -193,7 +198,7 @@ namespace Chatting_Server
             byte[] buf = Serialize_to_json(msg);
             foreach(var stream in socket)
             {
-                stream.WriteAsync(buf).ConfigureAwait(false);
+                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
         }
 
@@ -225,7 +230,7 @@ namespace Chatting_Server
             List<NetworkStream> socket = Search_socket(chat_room_list[receive_msg.RoomId]);
             foreach (var stream in socket)
             {
-                stream.WriteAsync(buf).ConfigureAwait(false);
+                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
         }
 
@@ -253,6 +258,7 @@ namespace Chatting_Server
             {
                 chat_room_list[room_id].Add(userId);
             }
+            Console.WriteLine("멤버 추가");
         }
 
         private void Send_add_invited_chatRoom(byte roomId)
@@ -264,8 +270,9 @@ namespace Chatting_Server
             byte[] buf = Serialize_to_json(msg);
             foreach (var stream in socket)
             {
-                stream.WriteAsync(buf).ConfigureAwait(false);
+                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
+            Console.WriteLine("멤버 전송");
         }
 
         private void Exit_chatRoom(byte roomId, string userId)
@@ -281,7 +288,7 @@ namespace Chatting_Server
             List<NetworkStream> socket = Search_socket(chat_room_list[roomId]);
             foreach (var stream in socket)
             {
-                stream.WriteAsync(buf).ConfigureAwait(false);
+                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
 
 
@@ -302,7 +309,7 @@ namespace Chatting_Server
             byte[] bytes = Serialize_to_json(msg);
             foreach (var user in connectedUser)
             {
-                user.Value.WriteAsync(bytes).ConfigureAwait(false);
+                user.Value.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
             }
         }
 

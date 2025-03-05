@@ -22,14 +22,23 @@ namespace Chatting
     public partial class Main : Page
     {
         Client clnt;
+        private readonly object thisLock = new();
 
         public Main()
         {
             InitializeComponent();
             clnt = new(this);
             clnt.ConnectServer();
-            clnt.Send_msg(Login(Global_Data.UserId));
-            Tblock_userId.Text = $"아이디 : {Global_Data.UserId}";
+            clnt.Send_msgAsync(Login(Global_Data.UserId));
+            //User user = new() { UserId = Global_Data.UserId };
+            //this.Dispatcher.BeginInvoke(() =>
+            //{
+            //    lock (thisLock)
+            //    {
+            //        Global_Data.UserList.Remove(user); // 자기 아이디는 유저리스트에서 안뜨게
+            //    }
+            //});
+            Tblock_userId.Text = $"{Global_Data.UserId}님 환영합니다.";
             LV_user_list.ItemsSource = Global_Data.UserList;
         }
 
@@ -41,7 +50,7 @@ namespace Chatting
 
         private void btn_create_chat_room_Click(object sender, RoutedEventArgs e)
         {
-            List<string> memberId = [];
+            List<string> memberId = [Global_Data.UserId]; // 자기자신은 항상 포함
             foreach(var member in Global_Data.UserList)
             {
                 if (member.IsChecked)
@@ -50,7 +59,7 @@ namespace Chatting
                     member.IsChecked = false;
                 }
             }
-            clnt.Send_msg(Create_chatRoom(memberId));
+            clnt.Send_msgAsync(Create_chatRoom(memberId));
             MessageBox.Show("대화방이 생성되었습니다.", "대화방 생성");
         }
 
