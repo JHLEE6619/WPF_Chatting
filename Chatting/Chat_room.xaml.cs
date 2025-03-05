@@ -22,18 +22,20 @@ namespace Chatting
     {
         private Client clnt;
         private byte roomId;
+        Chat_room_list chat_room_list;
 
         public Chat_room()
         {
             InitializeComponent();
         }
 
-        public Chat_room(Client clnt, byte roomId)
+        public Chat_room(Client clnt, byte roomId, Chat_room_list chat_room_list)
         {
             InitializeComponent();
             this.clnt = clnt;
             this.clnt.chat_room = this;
             this.roomId = roomId;
+            this.chat_room_list = chat_room_list;
             // 채팅방 입장 시 채팅기록 전송
             LV_chat_record.ItemsSource = Global_Data.ChatRecord[roomId];
         }
@@ -62,10 +64,6 @@ namespace Chatting
         private void btn_exit_Click(object sender, RoutedEventArgs e)
         {
             clnt.Send_msgAsync(Exit(roomId));
-            this.Dispatcher.BeginInvoke(() =>
-            {
-                Global_Data.ChatRecord.Remove(roomId);
-            });
             this.Close();
 
         }

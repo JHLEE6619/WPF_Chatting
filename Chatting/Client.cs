@@ -320,13 +320,34 @@ namespace Chatting
 
         private void Receive_exit_room(byte roomId, string userId)
         {
-            foreach(var chatRoom in Global_Data.ChatRoomList)
+            if (Global_Data.UserId.Equals(userId))
             {
-                if(chatRoom.RoomId == roomId)
+                chat_room.Dispatcher.BeginInvoke(() =>
                 {
-                    chatRoom.MemberId = chatRoom.MemberId.Replace($"{userId}, ", "");
-                    chatRoom.MemberId = chatRoom.MemberId.Replace($", {userId}", "");
-                    break;
+                    Global_Data.ChatRecord.Remove(roomId);
+                });
+                chat_room_list.Dispatcher.BeginInvoke(() =>
+                {
+                    foreach(var room in Global_Data.ChatRoomList)
+                    {
+                        if (room.RoomId == roomId)
+                        {
+                            Global_Data.ChatRoomList.Remove(room);
+                            break;
+                        }
+                    }
+                });
+            }
+            else
+            {
+                foreach (var chatRoom in Global_Data.ChatRoomList)
+                {
+                    if (chatRoom.RoomId == roomId)
+                    {
+                        chatRoom.MemberId = chatRoom.MemberId.Replace($"{userId}, ", "");
+                        chatRoom.MemberId = chatRoom.MemberId.Replace($", {userId}", "");
+                        break;
+                    }
                 }
             }
         }

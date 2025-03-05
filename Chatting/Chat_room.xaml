@@ -12,10 +12,10 @@
         <ListView x:Name="LV_chat_record" Margin="0,140,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="370" Height="330" Background="#FF9BBBD4">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="10" Orientation="Horizontal" Background="White">
-                        <TextBlock Text="{Binding UserId}" FontSize="16" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Content}" FontSize="12"/>
-                        <TextBlock Text="{Binding Time}" FontSize="12"/>
+                    <StackPanel Margin="10" Orientation="Horizontal">
+                        <TextBlock Height="30" Width="100" Text="{Binding UserId}" FontSize="14" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Height="30" Width="190" Text="{Binding Content}" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Height="30" Width="80" Text="{Binding Time}" FontSize="12" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

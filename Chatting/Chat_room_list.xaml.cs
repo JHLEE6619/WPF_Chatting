@@ -42,7 +42,7 @@ namespace Chatting
             int idx = LV_chat_room_list.SelectedIndex;
             LV_chat_room_list.SelectedItem = null;
             byte roomId = Global_Data.ChatRoomList[idx].RoomId;
-            Chat_room chat_room = new(clnt, roomId);
+            Chat_room chat_room = new(clnt, roomId, this);
             chat_room.Show();
 
         }

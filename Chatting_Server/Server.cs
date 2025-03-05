@@ -278,8 +278,8 @@ namespace Chatting_Server
 
         private void Exit_chatRoom(byte roomId, string userId)
         {
-            chat_room_list[roomId].Remove(userId);
             Send_exit_chatRoomAsync(roomId, userId);
+            chat_room_list[roomId].Remove(userId);
         }
 
         private async Task Send_exit_chatRoomAsync(byte roomId, string userId)
