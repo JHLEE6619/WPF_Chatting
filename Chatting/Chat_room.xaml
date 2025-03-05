@@ -14,7 +14,7 @@
                 <DataTemplate>
                     <StackPanel Margin="10" Orientation="Horizontal">
                         <TextBlock Margin="10" Text="{Binding UserId}" FontSize="16" FontWeight="Bold"/>
-                        <TextBlock Margin="20" Text="{Binding Content}" FontSize="12"/>
+                        <TextBlock Margin="50" Text="{Binding Content}" FontSize="12"/>
                         <TextBlock Text="{Binding Time}" FontSize="12"/>
                     </StackPanel>
                 </DataTemplate>

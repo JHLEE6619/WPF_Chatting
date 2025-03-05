@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chatting.csproj": {}
+    "C:\\Users\\ljh49\\OneDrive\\바탕 화면\\WPF 채팅프로그램\\Chatting\\Chatting.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chatting.csproj": {
+    "C:\\Users\\ljh49\\OneDrive\\바탕 화면\\WPF 채팅프로그램\\Chatting\\Chatting.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chatting.csproj",
+        "projectUniqueName": "C:\\Users\\ljh49\\OneDrive\\바탕 화면\\WPF 채팅프로그램\\Chatting\\Chatting.csproj",
         "projectName": "Chatting",
-        "projectPath": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\Chatting.csproj",
-        "packagesPath": "C:\\Users\\LMS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LMS\\Desktop\\WPF_Chatting\\Chatting\\obj\\",
+        "projectPath": "C:\\Users\\ljh49\\OneDrive\\바탕 화면\\WPF 채팅프로그램\\Chatting\\Chatting.csproj",
+        "packagesPath": "C:\\Users\\ljh49\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ljh49\\OneDrive\\바탕 화면\\WPF 채팅프로그램\\Chatting\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LMS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ljh49\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

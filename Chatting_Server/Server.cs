@@ -151,8 +151,6 @@ namespace Chatting_Server
             }
 
             byte[] bytes = Serialize_to_json(msg);
-            // 디버그용 출력문
-
             // 로그인한 유저 소켓으로 접속유저 리스트 전송
             await stream.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false); // await?  
         }
@@ -184,10 +182,13 @@ namespace Chatting_Server
 
         private void Create_chatRoom(List<string> memberId)
         {
+            List<(string, string, string)> chat = [];
             lock (thisLock)
             {
                 chat_room_list.Add(roomId, memberId);
+                chatRecord.Add(roomId, chat);
             }
+
         }
 
         private async Task Send_add_chatRoomAsync(List<string> memberId)
@@ -225,7 +226,7 @@ namespace Chatting_Server
             // 채팅방 번호 구성원의 ID로 채팅방 번호와 채팅 내용 add 할 수 있도록 전송
             Send_Message send_msg = new() {
                 MsgId = (byte)MsgId.SEND_CHAT, RoomId = receive_msg.RoomId, 
-                UserId = receive_msg.UserId, Chat = receive_msg.Chat };
+                UserId = receive_msg.UserId, Chat = receive_msg.Chat, Time = receive_msg.Time };
             byte[] buf = Serialize_to_json(send_msg);
             List<NetworkStream> socket = Search_socket(chat_room_list[receive_msg.RoomId]);
             foreach (var stream in socket)

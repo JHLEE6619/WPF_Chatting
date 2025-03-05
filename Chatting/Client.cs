@@ -207,7 +207,7 @@ namespace Chatting
         }
 
         private void Add_members(byte roomId, string memberId)
-        {
+        { 
             int idx = Search_Room(roomId);
             // 방이 없는 초대받은 유저는 방 추가
             if (idx == -1)
@@ -224,6 +224,8 @@ namespace Chatting
                         {
                             Global_Data.ChatRoomList[Search_Room(roomId)].MemberId = memberId;
                         }
+
+                        chat_room_list.InvalidateVisual();
                     });
                 }
                 else
@@ -283,6 +285,23 @@ namespace Chatting
         //    Create_room(roomId, memberId);
         //}
 
+        //private void Receive_chatRecord(byte roomId, List<(string, string, string)> chatRecord)
+        //{
+        //    ObservableCollection<Chat> chatList = new();
+        //    foreach (var item in chatRecord)
+        //    {
+        //        Chat chat = new()
+        //        {
+        //            UserId = item.Item1,
+        //            Content = item.Item2,
+        //            Time = item.Item3
+        //        };
+        //        chatList.Add(chat);
+        //    }
+
+        //    Global_Data.ChatRecord.Add(roomId, chatList);
+        //}
+
         private void Receive_chatRecord(byte roomId, List<(string, string, string)> chatRecord)
         {
             ObservableCollection<Chat> chatList = new();
@@ -294,10 +313,9 @@ namespace Chatting
                     Content = item.Item2,
                     Time = item.Item3
                 };
-                chatList.Add(chat);
+                Global_Data.ChatRecord[roomId].Add(chat);
             }
 
-            Global_Data.ChatRecord.Add(roomId, chatList);
         }
 
         private void Receive_exit_room(byte roomId, string userId)
@@ -315,10 +333,17 @@ namespace Chatting
 
         private void Receive_logout(string userId)
         {
-            User user = new() { UserId = userId };
+
             main.Dispatcher.BeginInvoke(() =>
             {
-                Global_Data.UserList.Remove(user);
+                foreach (var user in Global_Data.UserList)
+                {
+                    if (userId.Equals(user.UserId))
+                    {
+                        Global_Data.UserList.Remove(user);
+                        break;
+                    }
+                }
             });
         }
 
