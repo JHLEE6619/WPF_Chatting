@@ -43,7 +43,14 @@ namespace Chatting
 
         private ObservableCollection<User> Create_userList(byte roomId)
         {
-            ObservableCollection<User> userList = Global_Data.UserList;
+            //ObservableCollection<User> userList = Global_Data.UserList;
+            // deepcopy
+            ObservableCollection<User> userList = new();
+            foreach(var deepCopy in Global_Data.UserList)
+            {
+                userList.Add((User)deepCopy.Clone());
+            }
+
             string[] memberList = [];
             foreach (var chatRoom in Global_Data.ChatRoomList)
             {

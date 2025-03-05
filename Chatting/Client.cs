@@ -30,7 +30,7 @@ namespace Chatting
 
         public enum MsgId : byte
         {
-            JOIN, LOGIN, ADD_USER, CREATE_ROOM, SEND_CHAT, SEND_CHAT_RECORD, SEND_FILE, INVITE, EXIT, LOGOUT
+            JOIN, LOGIN, ADD_USER, CREATE_ROOM, SEND_CHAT, SEND_FILE, INVITE, SEND_CHAT_RECORD, EXIT, LOGOUT
         }
 
         public void ConnectServer()
@@ -72,24 +72,22 @@ namespace Chatting
                 {
                     case (byte)MsgId.LOGIN: // 할당
                         Receive_userList(msg.ConnectedUser);
-                        System.Diagnostics.Debug.WriteLine("로그인");
                         break;
                     case (byte)MsgId.ADD_USER: // Add
                         Add_user(msg.UserId);
-                        System.Diagnostics.Debug.WriteLine("유저 추가");
                         break;
                     case (byte)MsgId.CREATE_ROOM: // Add
                         Create_room(msg.RoomId, msg.UserId);
-                        System.Diagnostics.Debug.WriteLine("방 생성");
                         break;
                     case (byte)MsgId.SEND_CHAT: // Add
-                        System.Diagnostics.Debug.WriteLine("채팅 전송");
                         Add_chat(msg);
                         break;
                     case (byte)MsgId.SEND_FILE:
                         break;
-                    case (byte)MsgId.INVITE:
-                        System.Diagnostics.Debug.WriteLine("초대");
+                    case (byte)MsgId.INVITE: // 구성원 정보 수신 -> 기존 방을 제거하고 추가
+                        Add_members(msg.RoomId, msg.UserId);
+                        break;
+                    case (byte)MsgId.SEND_CHAT_RECORD:
                         Receive_chatRecord(msg.RoomId, msg.ChatRecord);
                         break;
                     case (byte)MsgId.EXIT: // Remove
@@ -155,7 +153,14 @@ namespace Chatting
                 {
                     lock (thisLock)
                     {
-                        Global_Data.ChatRecord.Add(roomId, chat);
+                        if (Global_Data.ChatRecord.ContainsKey(roomId))
+                        {
+                            Global_Data.ChatRecord[roomId] = chat;
+                        }
+                        else
+                        {
+                            Global_Data.ChatRecord.Add(roomId, chat);
+                        }
                     }
                 });
             }
@@ -163,7 +168,14 @@ namespace Chatting
             {
                 lock (thisLock)
                 {
-                    Global_Data.ChatRecord.Add(roomId, chat);
+                    if (Global_Data.ChatRecord.ContainsKey(roomId))
+                    {
+                        Global_Data.ChatRecord[roomId] = chat;
+                    }
+                    else
+                    {
+                        Global_Data.ChatRecord.Add(roomId, chat);
+                    }
                 }
             }
         }
@@ -194,20 +206,41 @@ namespace Chatting
                     Global_Data.ChatRecord[msg.RoomId].Add(chat);
                 }
             }
-
-            //if (Global_Data.ChatRecord.ContainsKey(msg.RoomId))
-            //{
-            //    Global_Data.ChatRecord[msg.RoomId].Add(chat);
-            //}
-            //else
-            //{
-            //    ObservableCollection<Chat> chatRecord = [];
-            //    chatRecord.Add(chat);
-            //    Global_Data.ChatRecord.Add(msg.RoomId, chatRecord);
-            //}
         }
 
-        private void Receive_chatRecord(byte roomId, List<(string, string, DateTime)> chatRecord)
+        private void Add_members(byte roomId, string memberId)
+        {
+            // 기존 방이 있으면 제거
+            foreach(var room in Global_Data.ChatRoomList)
+            {
+                if (room.RoomId == roomId)
+                {
+                    if(chat_room_list != null)
+                    {
+                        chat_room_list.Dispatcher.BeginInvoke(() =>
+                        {
+                            lock (thisLock)
+                            {
+                                Global_Data.ChatRoomList.Remove(room);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        lock (thisLock)
+                        {
+                            Global_Data.ChatRoomList.Remove(room);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            // 다시 방 추가
+            Create_room(roomId, memberId);
+        }
+
+        private void Receive_chatRecord(byte roomId, List<(string, string, string)> chatRecord)
         {
             ObservableCollection<Chat> chatList = new();
             foreach (var item in chatRecord)
@@ -223,16 +256,6 @@ namespace Chatting
 
             Global_Data.ChatRecord.Add(roomId, chatList);
         }
-
-        //// 유저가 방을 나갈때 서버로 보내는 명령
-        //private void Send_exit_room(byte roomId, string userId)
-        //{
-        //    Send_Message msg = new() { MsgId = (byte)MsgId.EXIT, UserId = userId };
-        //    byte[] buf = SerializeToJson(msg);
-        //    stream.WriteAsync(buf).ConfigureAwait(false);
-        //}
-
-        // 방을 나갔음을 알리는 서버로 부터의 메세지
 
         private void Receive_exit_room(byte roomId, string userId)
         {
@@ -250,11 +273,11 @@ namespace Chatting
         private void Receive_logout(string userId)
         {
             User user = new() { UserId = userId };
-            Global_Data.UserList.Remove(user);
+            main.Dispatcher.BeginInvoke(() =>
+            {
+                Global_Data.UserList.Remove(user);
+            });
         }
-        // 채팅방 입장전 -> 다른유저 채팅 -> add
-        // 채팅방 첫입장 -> 채팅기록 보내줌 -> 할당 -> 채팅방 창닫기 -> 다른유저가 채팅보냄 -> ADD -> 다시 채팅방 입장 -> 채팅기록 보내줌 ->할당
-        // 채팅방 리스트 첫입장 -> 채팅방 리스트 보내줌 -> 할당 -> 창닫기 ->
 
         private byte[] SerializeToJson(Send_Message msg)
         {

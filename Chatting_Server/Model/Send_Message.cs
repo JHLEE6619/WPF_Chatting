@@ -21,8 +21,8 @@ namespace Chatting_Server.Model
         // 채팅 내용
         public string Chat { get; set; }
         // 시간
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
         // 대화내용(아이디, 대화내용, 시간)
-        public List<(string, string, DateTime)> ChatRecord { get; set; } = [];
+        public List<(string, string, string)> ChatRecord { get; set; } = [];
     }
 }

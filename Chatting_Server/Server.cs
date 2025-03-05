@@ -19,14 +19,14 @@ namespace Chatting_Server
     {
         static Dictionary<string, NetworkStream> connectedUser = []; // <userId, socket>
         static Dictionary<byte, List<string>> chat_room_list = []; // <roomId , memberId>
-        static Dictionary<byte, List<(string, string, DateTime)>> chatRecord = []; // <roomId, chatRecord>
+        static Dictionary<byte, List<(string, string, string)>> chatRecord = []; // <roomId, chatRecord>
         static byte roomId = 0;
 
         private readonly object thisLock = new();
 
         private enum MsgId : byte
         {
-            JOIN, LOGIN, ADD_USER, CREATE_ROOM, SEND_CHAT, SEND_CHAT_RECORD, SEND_FILE, INVITE, EXIT, LOGOUT
+            JOIN, LOGIN, ADD_USER, CREATE_ROOM, SEND_CHAT, SEND_FILE, INVITE, SEND_CHAT_RECORD, EXIT, LOGOUT
         }
 
         public async Task StartServer()
@@ -121,8 +121,8 @@ namespace Chatting_Server
                 case (byte)MsgId.INVITE:
                     Console.WriteLine(" 초대 ");
                     Add_member_to_chatRoom(msg.RoomId, msg.MemberId);
-                    Send_add_invited_chatRoom(msg.RoomId);
-                    Send_chatRecord(msg.RoomId, msg.MemberId);
+                    Send_add_invited_chatRoomAsync(msg.RoomId);
+                    Send_chatRecordAsync(msg.RoomId, msg.MemberId);
                     break;
                 case (byte)MsgId.EXIT:
                     Console.WriteLine(" 퇴장 ");
@@ -213,7 +213,7 @@ namespace Chatting_Server
                 }
                 else
                 {
-                    List<(string, string, DateTime)> chat = [];
+                    List<(string, string, string)> chat = [];
                     chat.Add((msg.UserId, msg.Chat, msg.Time));
                     chatRecord.Add(msg.RoomId, chat);
                 }
@@ -234,24 +234,6 @@ namespace Chatting_Server
             }
         }
 
-
-        private void Send_chatRecord(byte roomId, List<string> memberList)
-        {
-            Send_Message msg = new() { MsgId = (byte)MsgId.SEND_CHAT_RECORD, RoomId = roomId  };
-            List<NetworkStream> socket = Search_socket(memberList);
-            List<(string, string, DateTime)> chat = [];
-            foreach(var ch in chatRecord[roomId])
-            {
-                chat.Add((ch.Item1, ch.Item2, ch.Item3));
-            }
-            msg.ChatRecord = chat;
-            byte[] buf = Serialize_to_json(msg);
-            foreach (var stream in socket)
-            {
-                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
-            }
-        }
-
         private void Add_member_to_chatRoom(byte room_id, List<string> memberId)
         {
             foreach(string userId in memberId)
@@ -261,18 +243,38 @@ namespace Chatting_Server
             Console.WriteLine("멤버 추가");
         }
 
-        private void Send_add_invited_chatRoom(byte roomId)
+        // 서버의 방 리스트에 추가 -> 서버의 방 리스트 인덱싱 -> 방의 멤버id만 가져옴 ->
+
+        private async Task Send_add_invited_chatRoomAsync(byte roomId)
         {
-            List<string> memberId = chat_room_list[roomId];
+            List<string> memberId = chat_room_list[roomId]; // 채팅방의 모든 구성원으로 정보 전송
             string memberList = String.Join(", ", memberId.ToArray());
             List<NetworkStream> socket = Search_socket(memberId);
-            Send_Message msg = new() { MsgId = (byte)MsgId.INVITE, RoomId = roomId, UserId = memberList };
+            Send_Message msg = new() { MsgId = (byte)MsgId.INVITE, RoomId = roomId, UserId = memberList }; // -> 클라이언트 Dictionary 키에러 가능성
             byte[] buf = Serialize_to_json(msg);
             foreach (var stream in socket)
             {
-                stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
+               await stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
             }
-            Console.WriteLine("멤버 전송");
+            Console.WriteLine("모든 멤버에게 멤버id 전송");
+        }
+
+        private async Task Send_chatRecordAsync(byte roomId, List<string> memberList) // 여기서 memberList는 초대된 멤버
+        {
+            Send_Message msg = new() { MsgId = (byte)MsgId.SEND_CHAT_RECORD, RoomId = roomId };
+            List<NetworkStream> socket = Search_socket(memberList);
+            List<(string, string, string)> chat = [];
+            foreach(var ch in chatRecord[roomId])
+            {
+                chat.Add((ch.Item1, ch.Item2, ch.Item3));
+            }
+            msg.ChatRecord = chat;
+            byte[] buf = Serialize_to_json(msg);
+            foreach (var stream in socket)
+            {
+                await stream.WriteAsync(buf, 0, buf.Length).ConfigureAwait(false);
+            }
+            Console.WriteLine("초대받은 유저들에게 채팅 내용 전송");
         }
 
         private void Exit_chatRoom(byte roomId, string userId)

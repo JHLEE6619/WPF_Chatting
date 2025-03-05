@@ -15,8 +15,8 @@ namespace Chatting.Model
         public List<string> ConnectedUser { get; set; } = [];
         public byte RoomId { get; set; }
         public string Chat { get; set; }
-        public DateTime Time { get; set; }
-        public List<(string, string, DateTime)> ChatRecord { get; set; } = [];
+        public string Time { get; set; }
+        public List<(string, string, string)> ChatRecord { get; set; } = [];
         
         
 

@@ -47,8 +47,9 @@ namespace Chatting
         private Send_Message Send_chat(string chat)
         {
             DateTime time = DateTime.Now;
+            string hhmm = time.ToString("hh:mm");
 
-            Send_Message msg = new() { MsgId = (byte)Client.MsgId.SEND_CHAT, UserId = Global_Data.UserId, RoomId = roomId, Chat = chat, Time = time };
+            Send_Message msg = new() { MsgId = (byte)Client.MsgId.SEND_CHAT, UserId = Global_Data.UserId, RoomId = roomId, Chat = chat, Time = hhmm };
             return msg;
         }
 
